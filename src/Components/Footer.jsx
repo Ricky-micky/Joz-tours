@@ -18,37 +18,34 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <h3 className="text-2xl font-bold text-yellow-400 mb-4">
-              Joztembo Tours
+              Jozz Tembo Tours and Safari
             </h3>
             <p className="text-gray-300 mb-4 leading-relaxed">
-              Discover the world with Joztembo Tours. We offer unforgettable
-              travel experiences, curated adventures, and personalized service
-              to make your journey extraordinary.
+              Driven by passion, guided by experience. With over 30 years of
+              excellence in tourism and safari industry, we provide
+              unforgettable African experiences from our base in Malindi. In
+              cooperation with Cimo Service.
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.instagram.com/joztembotours/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
               >
-                <FaFacebook size={20} />
+                <FaInstagram size={24} />
               </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
               >
-                <FaTwitter size={20} />
+                <FaFacebook size={24} />
               </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
               >
-                <FaInstagram size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
-              >
-                <FaYoutube size={20} />
+                <FaTwitter size={24} />
               </a>
             </div>
           </div>
@@ -56,47 +53,47 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4 text-yellow-400">
-              Quick Links
+              Our Services
             </h4>
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="#safari"
                   className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                 >
-                  Home
+                  Safari Adventures
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#beach"
                   className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                 >
-                  Destinations
+                  Beach Tours
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#cultural"
                   className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                 >
-                  Tour Packages
+                  Cultural Experiences
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#airport"
                   className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                 >
-                  About Us
+                  Airport Transfers
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#custom"
                   className="text-gray-300 hover:text-white transition-colors duration-300 block py-1"
                 >
-                  Contact
+                  Custom Packages
                 </a>
               </li>
             </ul>
@@ -111,45 +108,44 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="text-yellow-400 mt-1 flex-shrink-0" />
                 <span className="text-gray-300">
-                  123 Adventure Street, Travel City, TC 12345
+                  Malindi, Lamu Road
+                  <br />
+                  Kenya
                 </span>
               </div>
               <div className="flex items-center space-x-3">
                 <FaPhone className="text-yellow-400 flex-shrink-0" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <div className="flex flex-col">
+                  <span className="text-gray-300">+254 722 266 955</span>
+                  <span className="text-gray-300">+254 734 400 077</span>
+                </div>
               </div>
               <div className="flex items-center space-x-3">
                 <FaEnvelope className="text-yellow-400 flex-shrink-0" />
-                <span className="text-gray-300">info@joztembotours.com</span>
+                <span className="text-gray-300">info@jozztembotours.com</span>
               </div>
+            </div>
+
+            {/* Partnership Info */}
+            <div className="mt-4 p-3 bg-gray-800 rounded-lg">
+              <p className="text-sm text-gray-300">
+                <strong className="text-yellow-400">Partnership:</strong>
+                <br />
+                In cooperation with
+                <br />
+                <span className="text-white">Cimo Service</span>
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Newsletter Section */}
-      <div className="border-t border-gray-700">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <h4 className="text-lg font-semibold text-yellow-400 mb-2">
-                Stay Updated
-              </h4>
-              <p className="text-gray-300">
-                Subscribe to our newsletter for the latest deals and offers
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 w-full md:w-64 transition-all duration-300"
-              />
-              <button className="bg-yellow-400 text-gray-900 px-6 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition-colors duration-300 whitespace-nowrap">
-                Subscribe
-              </button>
-            </div>
-          </div>
+      {/* Experience Banner */}
+      <div className="bg-yellow-600 py-4">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-white text-lg font-semibold">
+            🦁 Over 30 Years of Safari Excellence | Trusted Since 1993 🦒
+          </p>
         </div>
       </div>
 
@@ -157,11 +153,16 @@ const Footer = () => {
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} Joztembo Tour Company. All rights
-              reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="text-center md:text-left mb-4 md:mb-0">
+              <p className="text-gray-400 text-sm">
+                © {new Date().getFullYear()} Jozz Tembo Tours and Safari. All
+                rights reserved.
+              </p>
+              <p className="text-yellow-400 text-sm mt-1 italic">
+                Driven by passion, guided by experience
+              </p>
+            </div>
+            <div className="flex space-x-6">
               <a
                 href="#"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-300"

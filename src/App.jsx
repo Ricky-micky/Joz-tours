@@ -9,6 +9,9 @@ import Maasaimara from "./Parks/Maasaimara";
 import Nakuru from "./Parks/Nakuru";
 import Tsavowest from "./Parks/Tsavowest";
 import TsavoEast from "./Parks/Tsavoeast";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import Accommodation from "./Pages/Accommodation";
 
 export default function App() {
   return (
@@ -21,6 +24,13 @@ export default function App() {
             <Route path="/safaris" element={<Safaris />} />
             <Route path="/amboseli" element={<Amboseli />} />
             <Route path="/tsavoeast" element={<TsavoEast />} />
+            <Route path="/tsavowest" element={<Tsavowest />} />
+            <Route path="/masaimara" element={<Maasaimara />} />
+            <Route path="/Nakurupark" element={<Nakuru />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact"element={<Contact />} />
+            <Route path="/accommodation" element={<Accommodation />} />
+
           </Routes>
         </main>
         <Footer />
