@@ -114,7 +114,7 @@ const Contact = () => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-xl md:text-2xl max-w-3xl mx-auto"
           >
-            Ready for your African adventure? Get in touch with Jozz Tembo Tours
+            Ready for your African adventure? Get in touch with JozTembo Tours
             and Safari
           </motion.p>
         </div>

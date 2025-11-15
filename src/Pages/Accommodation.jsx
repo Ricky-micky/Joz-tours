@@ -232,7 +232,7 @@ const Accommodation = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-amber-900 mb-4">
-            Joz Tembo Tours Accommodation
+            JozTembo Tours Accommodation
           </h1>
           <p className="text-lg text-amber-700 max-w-2xl mx-auto">
             Discover our carefully selected partner hotels in Watamu, Malindi,

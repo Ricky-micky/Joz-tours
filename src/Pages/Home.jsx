@@ -7,28 +7,29 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  // Slideshow images data
+  // Updated Slideshow images data with your provided images
   const slides = [
     {
       id: 1,
       image:
-        "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-      title: "Journey Into the Wild Heart of Kenya",
-      subtitle: "Premium Safari Experiences in Kenya's Most Iconic Parks",
+        "https://trips4africa.com/wp-content/uploads/2024/05/15-Interesting-Facts-About-The-Serengeti1.jpg",
+      title: "Discover the Wonders of Serengeti",
+      subtitle:
+        "Experience the vast plains and incredible wildlife of Tanzania's most famous park",
     },
     {
       id: 2,
       image:
-        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
+        "https://images.pond5.com/blue-wildebeest-connochaetes-taurinus-crossing-footage-106445999_iconl.jpeg",
       title: "Witness the Great Migration",
-      subtitle: "Experience Nature's Greatest Spectacle in Maasai Mara",
+      subtitle: "Marvel at the spectacular wildebeest river crossings",
     },
     {
       id: 3,
       image:
-        "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80",
-      title: "Elephants Against Kilimanjaro",
-      subtitle: "Iconic Views in Amboseli National Park",
+        "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-720x480/11/c8/2d/58.jpg",
+      title: "Authentic Cultural Experiences",
+      subtitle: "Immerse yourself in rich Maasai traditions and heritage",
     },
   ];
 
@@ -172,10 +173,19 @@ export default function Home() {
   };
 
   const handleBookNow = (lodge) => {
+    // Store booking data in localStorage to carry to safaris page
+    const bookingData = {
+      park: selectedPark,
+      lodge: lodge,
+      timestamp: new Date().toISOString(),
+    };
+    localStorage.setItem("currentBooking", JSON.stringify(bookingData));
+
     navigate("/safaris", {
       state: {
         park: selectedPark,
         lodge: lodge,
+        autoOpen: true, // Flag to auto-open the park card
       },
     });
     setShowModal(false);
