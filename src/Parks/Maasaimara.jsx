@@ -10,8 +10,8 @@ const Maasaimara = () => {
     email: "",
     phone: "",
     travelers: 1,
-    contactMethod: "whatsapp",
     message: "",
+    startDate: "",
   });
 
   const parkInfo = {
@@ -97,9 +97,8 @@ const Maasaimara = () => {
   };
 
   const calculatePrice = (days, priceRange) => {
-    const minTotal = days * priceRange.min;
-    const maxTotal = days * priceRange.max;
-    return { min: minTotal, max: maxTotal };
+    const avgPrice = (priceRange.min + priceRange.max) / 2;
+    return Math.round(avgPrice * days);
   };
 
   const handleRouteSelect = (route) => {
@@ -119,58 +118,148 @@ const Maasaimara = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Function to send booking to backend
+  const sendBookingToBackend = async (bookingData) => {
+    try {
+      console.log("📤 Sending Maasai Mara booking to backend...", bookingData);
+
+      const response = await fetch("http://localhost:5000/api/send-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await response.json();
+
+      if (response.status === 400) {
+        console.error("Backend validation error:", result);
+        return { success: false, error: result.error };
+      }
+
+      if (result.success) {
+        alert(
+          "✅ Booking request sent successfully! Check your email for confirmation."
+        );
+        return { success: true, data: result };
+      } else {
+        console.error("Backend error:", result.error);
+        return { success: false, error: result.error };
+      }
+    } catch (error) {
+      console.error("Error sending to backend:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Function to send direct email (fallback)
+  const sendDirectEmail = (bookingData) => {
+    const emailBody = `
+MAASAI MARA SAFARI BOOKING DETAILS:
+
+📍 PARK: ${bookingData.park}
+🚗 ROUTE/ITINERARY: ${bookingData.route}
+📅 DURATION: ${bookingData.days} days
+👥 TRAVELERS: ${bookingData.travelers}
+💰 ESTIMATED TOTAL PRICE: $${bookingData.totalPrice}
+📝 ITINERARY TYPE: ${bookingData.route}
+
+📋 ITINERARY:
+${bookingData.itinerary.map((day, index) => `${index + 1}. ${day}`).join("\n")}
+
+👤 PERSONAL INFORMATION:
+- Full Name: ${bookingData.fullName}
+- Email: ${bookingData.email}
+- Phone: ${bookingData.phone}
+- Start Date: ${bookingData.startDate || "Flexible"}
+
+💬 ADDITIONAL MESSAGE:
+${bookingData.message || "No additional message"}
+
+📧 This booking was made from the Maasai Mara National Reserve page.
+    `.trim();
+
+    window.open(
+      `mailto:tembo4401@gmail.com?subject=Maasai Mara Safari Booking: ${
+        bookingData.route
+      } - ${bookingData.fullName}&body=${encodeURIComponent(emailBody)}`
+    );
+  };
+
+  // Main submit function
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedRoute) {
+      alert("Please select a safari route first.");
+      return;
+    }
 
     const totalPrice = calculatePrice(selectedDays, selectedRoute.priceRange);
     const itinerary = generateItinerary(selectedDays, selectedRoute.name);
 
-    const bookingDetails = `
-MAASAI MARA SAFARI BOOKING DETAILS:
+    // Prepare booking data to match backend's expected fields
+    const bookingData = {
+      // REQUIRED FIELDS by backend:
+      park: parkInfo.name,
+      lodge: selectedRoute.name, // Backend expects 'lodge', using route name
+      days: selectedDays,
+      travelers: bookingForm.travelers,
+      totalPrice: totalPrice,
+      fullName: bookingForm.fullName,
+      email: bookingForm.email,
+      phone: bookingForm.phone,
 
-Personal Information:
-- Name: ${bookingForm.fullName}
-- Email: ${bookingForm.email}
-- Phone: ${bookingForm.phone}
-- Number of Travelers: ${bookingForm.travelers}
+      // OPTIONAL FIELDS that backend also accepts:
+      startDate: bookingForm.startDate || "Flexible",
+      message: bookingForm.message || "",
+      parkHighlights: parkInfo.highlights.join(", "),
+      bestTime: parkInfo.bestTime,
+      wildlife: parkInfo.wildlife,
+      specialFeature: parkInfo.specialFeature,
+      lodgeDescription: selectedRoute.description,
+      itinerary: itinerary.join("\n"),
 
-Safari Details:
-- Safari Route: ${selectedRoute.name}
-- Duration: ${selectedDays} days
-- Estimated Price: $${totalPrice.min} - $${totalPrice.max}
-- Preferred Contact: ${bookingForm.contactMethod}
+      // Additional info for tracking
+      bookingSource: "Maasai Mara Park Page",
+      route: selectedRoute.name,
+    };
 
-Itinerary:
-${itinerary.map((day) => `  • ${day}`).join("\n")}
+    console.log("📝 Maasai Mara booking data:", bookingData);
 
-Additional Message: ${bookingForm.message}
+    // Try to send to backend first
+    const result = await sendBookingToBackend(bookingData);
 
-Thank you for choosing Maasai Mara Safari Experience!
-    `.trim();
-
-    if (bookingForm.contactMethod === "whatsapp") {
-      const whatsappUrl = `https://wa.me/254712345678?text=${encodeURIComponent(
-        bookingDetails
-      )}`;
-      window.open(whatsappUrl, "_blank");
-    } else {
-      const subject = `Maasai Mara Safari Booking - ${selectedRoute.name} - ${bookingForm.fullName}`;
-      const body = bookingDetails;
-      const mailtoUrl = `mailto:bookings@maasaimarasafari.com?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoUrl;
+    if (!result.success) {
+      // If backend fails, use direct email fallback
+      console.log("⚠️ Backend failed, using fallback email...");
+      alert("⚠️ Using fallback email method...");
+      sendDirectEmail({
+        ...bookingData,
+        route: selectedRoute.name,
+      });
     }
 
+    // Reset form and close modals
     setShowBookingModal(false);
+    setShowItineraryModal(false);
     setBookingForm({
       fullName: "",
       email: "",
       phone: "",
       travelers: 1,
-      contactMethod: "whatsapp",
       message: "",
+      startDate: "",
     });
+  };
+
+  // Close modals when clicking outside
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setShowItineraryModal(false);
+      setShowBookingModal(false);
+    }
   };
 
   return (
@@ -499,7 +588,10 @@ Thank you for choosing Maasai Mara Safari Experience!
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
           <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
@@ -577,10 +669,7 @@ Thank you for choosing Maasai Mara Safari Experience!
                     Estimated Total Price:
                   </span>
                   <span className="text-2xl font-bold text-red-600">
-                    $
-                    {calculatePrice(selectedDays, selectedRoute.priceRange).min}{" "}
-                    - $
-                    {calculatePrice(selectedDays, selectedRoute.priceRange).max}
+                    ${calculatePrice(selectedDays, selectedRoute.priceRange)}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -602,7 +691,10 @@ Thank you for choosing Maasai Mara Safari Experience!
 
       {/* Booking Modal */}
       {showBookingModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-y-auto">
             <form onSubmit={handleSubmit} className="p-6">
               <div className="flex justify-between items-center mb-6">
@@ -696,32 +788,15 @@ Thank you for choosing Maasai Mara Safari Experience!
 
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2">
-                    Preferred Contact Method *
+                    Preferred Start Date
                   </label>
-                  <div className="flex space-x-6">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contactMethod"
-                        value="whatsapp"
-                        checked={bookingForm.contactMethod === "whatsapp"}
-                        onChange={handleFormChange}
-                        className="mr-2 text-red-600 focus:ring-red-500"
-                      />
-                      <span className="flex items-center">WhatsApp</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="contactMethod"
-                        value="email"
-                        checked={bookingForm.contactMethod === "email"}
-                        onChange={handleFormChange}
-                        className="mr-2 text-red-600 focus:ring-red-500"
-                      />
-                      Email
-                    </label>
-                  </div>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={bookingForm.startDate}
+                    onChange={handleFormChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+                  />
                 </div>
 
                 <div>
@@ -737,14 +812,57 @@ Thank you for choosing Maasai Mara Safari Experience!
                     placeholder="Any special requirements, preferred travel dates for migration viewing, or questions about your Maasai Mara safari..."
                   ></textarea>
                 </div>
+
+                {/* Booking Summary */}
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Booking Summary
+                  </h3>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Route:</span>{" "}
+                    {selectedRoute?.name}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Duration:</span>{" "}
+                    {selectedDays} days
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Estimated Total Price:</span>{" "}
+                    $
+                    {calculatePrice(
+                      selectedDays,
+                      selectedRoute?.priceRange || { min: 0, max: 0 }
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    All booking details will be sent to tembo4401@gmail.com
+                  </p>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 mt-6"
+                className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 mt-6 flex items-center justify-center gap-2"
               >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
                 Send Booking Request
               </button>
+
+              <p className="text-xs text-gray-500 text-center mt-4">
+                Your booking details will be sent to tembo4401@gmail.com
+              </p>
             </form>
           </div>
         </div>

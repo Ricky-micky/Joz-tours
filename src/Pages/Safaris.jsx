@@ -1,580 +1,663 @@
+// components/Safaris.js
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Safaris = () => {
   const [selectedPark, setSelectedPark] = useState(null);
   const [selectedLodge, setSelectedLodge] = useState(null);
-  const [selectedDays, setSelectedDays] = useState(3);
-  const [showParkModal, setShowParkModal] = useState(false);
-  const [showItineraryModal, setShowItineraryModal] = useState(false);
-  const [showBookingModal, setShowBookingModal] = useState(false);
-  const [autoOpenPark, setAutoOpenPark] = useState(null);
+  const [step, setStep] = useState(1); // 1: Park, 2: Lodge, 3: Options, 4: Booking
   const [bookingForm, setBookingForm] = useState({
+    days: 3,
+    travelers: 1,
+    startDate: "",
     fullName: "",
     email: "",
     phone: "",
-    travelers: 1,
-    contactMethod: "whatsapp",
     message: "",
-    startDate: "",
   });
 
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Check for auto-open data from Home page
-  useEffect(() => {
-    if (location.state?.autoOpen) {
-      setSelectedPark(location.state.park);
-      setSelectedLodge(location.state.lodge);
-      setShowParkModal(true);
-      setAutoOpenPark(location.state.park.name);
-    }
-
-    // Also check localStorage for booking data
-    const storedBooking = localStorage.getItem("currentBooking");
-    if (storedBooking) {
-      const bookingData = JSON.parse(storedBooking);
-      setSelectedPark(bookingData.park);
-      setSelectedLodge(bookingData.lodge);
-      setShowParkModal(true);
-      setAutoOpenPark(bookingData.park.name);
-    }
-  }, [location]);
-
-  // Detailed parks data with all information
+  // Add the parks data (copy from your Home.js or create separate data file)
   const parks = [
     {
       id: 1,
       name: "Maasai Mara",
-      image:
-        "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description:
-        "Witness the Great Wildebeest Migration and abundant wildlife.",
-      route: "/masaimara",
-      highlights: [
-        "Great Migration",
-        "Big Cats",
-        "Maasai Culture",
-        "River Crossings",
-        "Hot Air Balloon Safaris",
-      ],
-      bestTime: "July to October for Migration, Year-round for wildlife",
-      wildlife:
-        "Lions, Cheetahs, Leopards, Elephants, Rhinos, Buffaloes, Wildebeest, Zebras",
-      size: "1,510 km² - World's most famous wildlife reserve",
-      specialFeature: "Annual Great Migration of over 1.5 million wildebeest",
+      slug: "maasai-mara",
+      path: "/maasaimara",
+      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801",
+      description: "Witness the Great Wildebeest Migration",
       pricePerDay: 350,
+      highlights: ["Great Migration", "Big Cats", "Maasai Culture"],
+      bestTime: "July to October",
+      wildlife: "Lions, Cheetahs, Leopards, Elephants, Rhinos, Buffaloes",
+      specialFeature: "Annual Great Migration of over 1.5 million wildebeest",
       lodges: [
         {
+          name: "Sweet Acacia Camp",
+          image: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+          description:
+            "Luxurious tented camp offering intimate wildlife experiences",
+        },
+        {
           name: "Mara Serena Safari Lodge",
-          image:
-            "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "Luxurious lodge overlooking the Mara River with premium game viewing opportunities.",
-          priceRange: "$$$",
-        },
-        {
-          name: "Basecamp Explorer",
-          image:
-            "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "Eco-friendly tented camp offering intimate wildlife encounters.",
-          priceRange: "$$",
-        },
-      ],
-      safariRoutes: [
-        {
-          id: 1,
-          name: "Maasai Mara → Lake Nakuru → Nairobi",
-          description:
-            "Classic safari combining the Mara's big cats with Lake Nakuru's flamingos and rhinos.",
-          priceRange: { min: 350, max: 500 },
-          duration: "5-7 days recommended",
-          highlights: ["Great Migration", "Big Cats", "Flamingo Lake"],
-        },
-        {
-          id: 2,
-          name: "Maasai Mara Great Migration Special",
-          description:
-            "Focused experience during migration season with extended Mara stays for river crossings.",
-          priceRange: { min: 400, max: 600 },
-          duration: "4-6 days recommended",
-          highlights: ["River Crossings", "Predator Action", "Migration Herds"],
+          image: "https://images.unsplash.com/photo-1586375300773-8384e3e4916f",
+          description: "Award-winning lodge with panoramic views",
         },
       ],
     },
     {
       id: 2,
-      name: "Amboseli",
-      image:
-        "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description:
-        "Famous for its large elephant herds and stunning views of Mount Kilimanjaro.",
-      route: "/amboseli",
-      highlights: [
-        "Elephant Herds",
-        "Mount Kilimanjaro",
-        "Big Five",
-        "Swamp Ecosystems",
-        "Observation Hill",
-      ],
-      bestTime: "June to October & January to February",
-      wildlife:
-        "Elephants, Lions, Cheetahs, Buffaloes, Hippos, Giraffes, Zebras",
-      size: "392 km² - Best views of Mount Kilimanjaro",
-      specialFeature: "Large elephant herds with Kilimanjaro backdrop",
-      pricePerDay: 300,
+      name: "Lake Nakuru National Park",
+      slug: "lake-nakuru",
+      path: "/lake-nakuru",
+      image: "https://images.unsplash.com/photo-1549317336-206009e0c0d3",
+      description: "Famous for flamingos and rhino sanctuary",
+      pricePerDay: 250,
+      highlights: ["Flamingos", "Rhino Sanctuary", "Bird Watching"],
+      bestTime: "June to March",
+      wildlife: "Flamingos, Rhinos, Lions, Leopards, Waterbucks",
+      specialFeature:
+        "Sometimes over a million flamingos coloring the lake pink",
       lodges: [
         {
-          name: "Ol Tukai Lodge",
-          image:
-            "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "Award-winning lodge with the best views of Mount Kilimanjaro.",
-          priceRange: "$$$",
-        },
-      ],
-      safariRoutes: [
-        {
-          id: 1,
-          name: "Amboseli Elephant Safari",
-          description:
-            "Focused elephant watching with Kilimanjaro photography opportunities.",
-          priceRange: { min: 300, max: 450 },
-          duration: "3-5 days recommended",
-          highlights: ["Elephant Herds", "Kilimanjaro Views", "Swamp Wildlife"],
+          name: "Lake Nakuru Lodge",
+          image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+          description: "Modern lodge with stunning lake views",
         },
       ],
     },
     {
       id: 3,
-      name: "Samburu",
-      image:
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description:
-        "Home to the rare 'Special Five' and unique northern species.",
-      route: "/samburu",
-      highlights: [
-        "Special Five",
-        "Ewaso Nyiro River",
-        "Cultural Visits",
-        "Unique Species",
-        "Riverine Forest",
-      ],
-      bestTime: "June to October & December to March",
-      wildlife:
-        "Grevy's Zebra, Reticulated Giraffe, Somali Ostrich, Gerenuk, Beisa Oryx",
-      size: "165 km² - Unique northern species sanctuary",
-      specialFeature:
-        "The 'Special Five' - unique species not found in southern parks",
-      pricePerDay: 280,
+      name: "Tsavo East",
+      slug: "tsavo-east",
+      path: "/tsavoeast",
+      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96",
+      description: "Vast wilderness with red elephants",
+      pricePerDay: 270,
+      highlights: ["Red Elephants", "Mudanda Rock", "Lugard Falls"],
+      bestTime: "April to October & January to February",
+      wildlife: "Red Elephants, Lions, Buffaloes, Giraffes, Antelopes",
+      specialFeature: "Famous 'red elephants' dusted in red volcanic soil",
       lodges: [
         {
-          name: "Samburu Intrepids Club",
-          image:
-            "https://images.unsplash.com/photo-1586375300773-8384e3e4916f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description: "Luxurious tented camp along the Ewaso Nyiro River.",
-          priceRange: "$$$",
-        },
-      ],
-      safariRoutes: [
-        {
-          id: 1,
-          name: "Samburu Special Five Safari",
-          description:
-            "Search for the unique wildlife species of northern Kenya.",
-          priceRange: { min: 280, max: 420 },
-          duration: "3-4 days recommended",
-          highlights: ["Special Five", "River Game Viewing", "Samburu Culture"],
+          name: "Voi Safari Lodge",
+          image: "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8",
+          description: "Overlooking waterhole with excellent game viewing",
         },
       ],
     },
     {
       id: 4,
-      name: "Nakuru",
-      image:
-        "https://images.unsplash.com/photo-1549317336-206009e0c0d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description:
-        "Famous for flamingos and one of Kenya's largest rhino sanctuaries.",
-      route: "/nakurupark",
-      highlights: [
-        "Flamingos",
-        "Rhino Sanctuary",
-        "Bird Watching",
-        "Lake Views",
-        "Baboon Cliff",
-      ],
-      bestTime: "June to March for bird watching",
-      wildlife: "Flamingos, Rhinos, Lions, Leopards, Waterbucks, Giraffes",
-      size: "188 km² - World famous bird sanctuary",
-      specialFeature:
-        "Sometimes over a million flamingos coloring the lake pink",
-      pricePerDay: 250,
+      name: "Tsavo West",
+      slug: "tsavo-west",
+      path: "/tsavowest",
+      image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e",
+      description: "Diverse landscapes and Mzima Springs",
+      pricePerDay: 260,
+      highlights: ["Mzima Springs", "Volcanic Cones", "Rhino Sanctuary"],
+      bestTime: "April to October & January to February",
+      wildlife: "Hippos, Crocodiles, Rhinos, Elephants, Lions, Leopards",
+      specialFeature: "Mzima Springs with underwater hippo and fish viewing",
       lodges: [
         {
-          name: "Lake Nakuru Lodge",
-          image:
-            "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "Modern lodge with stunning lake views and swimming pool.",
-          priceRange: "$$",
-        },
-      ],
-      safariRoutes: [
-        {
-          id: 1,
-          name: "Lake Nakuru Birding Special",
-          description:
-            "Perfect for bird enthusiasts and rhino conservation viewing.",
-          priceRange: { min: 250, max: 380 },
-          duration: "2-3 days recommended",
-          highlights: ["Flamingo Colonies", "Rhino Tracking", "Bird Species"],
+          name: "Kilaguni Serena Lodge",
+          image: "https://images.unsplash.com/photo-1586375300773-8384e3e4916f",
+          description: "First lodge built in a Kenyan national park",
         },
       ],
     },
     {
       id: 5,
-      name: "Tsavo East",
-      image:
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description: "Known for the 'red elephants' and vast wilderness areas.",
-      route: "/tsavoeast",
-      highlights: [
-        "Red Elephants",
-        "Mudanda Rock",
-        "Lugard Falls",
-        "Yatta Plateau",
-        "Arid Wilderness",
-      ],
-      bestTime: "All Year Round",
-      wildlife:
-        "Red Elephants, Lions, Buffaloes, Giraffes, Antelopes, Bird Species",
-      size: "13,747 km² - Kenya's largest national park",
-      specialFeature: "Famous 'red elephants' dusted in red volcanic soil",
-      pricePerDay: 270,
+      name: "Amboseli",
+      slug: "amboseli",
+      path: "/amboseli",
+      image: "https://images.unsplash.com/photo-1551632811-561732d1e306",
+      description: "Elephants with Mount Kilimanjaro backdrop",
+      pricePerDay: 300,
+      highlights: ["Elephant Herds", "Mount Kilimanjaro", "Big Five"],
+      bestTime: "June to October & January to February",
+      wildlife: "Elephants, Lions, Cheetahs, Buffaloes, Hippos, Giraffes",
+      specialFeature: "Large elephant herds with Kilimanjaro backdrop",
       lodges: [
         {
-          name: "Voi Safari Lodge",
-          image:
-            "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "Historic lodge with waterhole views and comfortable accommodations.",
-          priceRange: "$$",
+          name: "Hunters Manor",
+          image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+          description: "Boutique lodge with Kilimanjaro views",
         },
-      ],
-      safariRoutes: [
         {
-          id: 1,
-          name: "Tsavo East Wilderness Experience",
-          description:
-            "Explore Kenya's largest park with its unique red elephants.",
-          priceRange: { min: 270, max: 400 },
-          duration: "3-4 days recommended",
-          highlights: [
-            "Red Elephants",
-            "Mudanda Rock",
-            "Wilderness Experience",
-          ],
+          name: "Kilima Safari Camp",
+          image: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+          description: "Eco-friendly camp at Kilimanjaro's foot",
         },
       ],
     },
     {
       id: 6,
-      name: "Tsavo West",
-      image:
-        "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-      description:
-        "Features Mzima Springs, volcanic landscapes, and diverse wildlife.",
-      route: "/tsavowest",
-      highlights: [
-        "Mzima Springs",
-        "Volcanic Cones",
-        "Rhino Sanctuary",
-        "Underwater Hippo Viewing",
-        "Shetani Lava Flow",
-      ],
-      bestTime: "All Year Round",
-      wildlife: "Hippos, Crocodiles, Rhinos, Elephants, Lions, Leopards",
-      size: "9,065 km² - Diverse landscapes and ecosystems",
-      specialFeature: "Mzima Springs with underwater hippo and fish viewing",
-      pricePerDay: 260,
+      name: "Taita Hills",
+      slug: "taita-hills",
+      path: "/taitahills",
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+      description: "Lush green hills and unique ecosystem",
+      pricePerDay: 240,
+      highlights: ["Mountain Views", "Unique Ecosystem", "Bird Watching"],
+      bestTime: "All year round",
+      wildlife: "Elephants, Buffaloes, Antelopes, Bird Species",
+      specialFeature:
+        "Lush green hills serving as wildlife corridor between Tsavo parks",
       lodges: [
         {
-          name: "Kilaguni Serena Safari Lodge",
-          image:
-            "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-          description:
-            "First lodge in Kenya's national park system with waterhole views.",
-          priceRange: "$$$",
+          name: "Taita Hills Safari Resort",
+          image: "https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8",
+          description: "Luxurious resort with stunning hill views",
         },
       ],
-      safariRoutes: [
+    },
+    {
+      id: 7,
+      name: "Salt Lick Sanctuary",
+      slug: "salt-lick",
+      path: "/park/salt-lick",
+      image: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0",
+      description: "Famous tree-top lodge and wildlife",
+      pricePerDay: 280,
+      highlights: ["Tree-top Lodge", "Salt Licks", "Night Game Drives"],
+      bestTime: "All year round",
+      wildlife: "Elephants, Buffaloes, Antelopes, Bird Species",
+      specialFeature: "Iconic tree-top lodge overlooking salt licks",
+      lodges: [
         {
-          id: 1,
-          name: "Tsavo West Springs & Wildlife",
-          description:
-            "Discover Mzima Springs and the diverse wildlife of Tsavo West.",
-          priceRange: { min: 260, max: 390 },
-          duration: "3-4 days recommended",
-          highlights: [
-            "Mzima Springs",
-            "Rhino Sanctuary",
-            "Volcanic Landscapes",
-          ],
+          name: "Salt Lick Safari Lodge",
+          image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa",
+          description: "Iconic tree-top lodge overlooking salt licks",
         },
       ],
     },
   ];
 
-  const generateItinerary = (park, days) => {
-    const baseItineraries = {
-      "Maasai Mara": [
-        "Day 1: Arrival in Nairobi, transfer to Maasai Mara, evening game drive",
-        "Day 2: Full day game drive in Maasai Mara, visit Maasai village",
-        "Day 3: Morning game drive, return to Nairobi",
-      ],
-      Amboseli: [
-        "Day 1: Arrival, transfer to Amboseli, evening game drive with Kilimanjaro views",
-        "Day 2: Full day exploring Amboseli's elephant herds and swamps",
-        "Day 3: Morning game drive, visit observation hill, return to Nairobi",
-      ],
-      Samburu: [
-        "Day 1: Drive to Samburu, afternoon game drive along Ewaso Nyiro River",
-        "Day 2: Full day searching for the Special Five",
-        "Day 3: Morning game drive, cultural visit, return to Nairobi",
-      ],
-      Nakuru: [
-        "Day 1: Drive to Lake Nakuru, afternoon bird watching and game drive",
-        "Day 2: Full day exploring the park, visit the rhino sanctuary",
-        "Day 3: Morning game drive, return to Nairobi",
-      ],
-      "Tsavo East": [
-        "Day 1: Arrival at Tsavo East, afternoon game drive viewing red elephants",
-        "Day 2: Full day exploring Mudanda Rock and Aruba Dam",
-        "Day 3: Morning game drive, return to Nairobi",
-      ],
-      "Tsavo West": [
-        "Day 1: Arrival at Tsavo West, visit Mzima Springs for hippo viewing",
-        "Day 2: Full day exploring rhino sanctuary and volcanic landscapes",
-        "Day 3: Morning game drive, return to Nairobi",
-      ],
-    };
+  useEffect(() => {
+    // Check for data from Home page or URL
+    const params = new URLSearchParams(location.search);
+    const parkSlug = params.get("park");
+    const lodgeName = params.get("lodge");
 
-    let itinerary = baseItineraries[park] || baseItineraries["Maasai Mara"];
+    // Get stored booking data
+    const storedBooking = localStorage.getItem("safariBooking");
 
-    // Extend itinerary based on selected days
-    if (days > 3) {
-      for (let i = 4; i <= days; i++) {
-        itinerary.push(
-          `Day ${i}: Extended exploration and specialized activities`
-        );
+    if (storedBooking) {
+      const data = JSON.parse(storedBooking);
+      setSelectedPark(data.park);
+      setSelectedLodge(data.lodge);
+      setStep(3); // Skip to options step
+    } else if (parkSlug) {
+      // Find park by slug
+      const foundPark = parks.find((p) => p.slug === parkSlug);
+      if (foundPark) {
+        setSelectedPark(foundPark);
+        setStep(1);
       }
     }
+  }, [location]);
 
-    return itinerary;
-  };
-
-  const calculatePrice = (park, days, travelers) => {
-    const parkData = parks.find((p) => p.name === park);
-    const basePrice = parkData ? parkData.pricePerDay : 300;
-    return basePrice * days * travelers;
-  };
-
-  const handleParkSelect = (park) => {
-    // If park has a dedicated route, navigate to it
-    if (park.route) {
-      navigate(park.route);
-    } else {
-      // Otherwise show modal with park details
-      setSelectedPark(park);
-      setSelectedLodge(null);
-      setShowParkModal(true);
+  const handleNextStep = () => {
+    if (step < 4) {
+      setStep(step + 1);
     }
   };
 
-  const handleDaysSelect = (days) => {
-    setSelectedDays(days);
-    setShowItineraryModal(true);
+  const handleBackStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
   };
 
-  const handleBooking = () => {
-    setShowItineraryModal(false);
-    setShowBookingModal(true);
-  };
+  // UPDATED: Connect to your backend
+  const handleSubmitBooking = async () => {
+    try {
+      // Calculate total price
+      const totalPrice =
+        selectedPark.pricePerDay * bookingForm.days * bookingForm.travelers;
 
-  const handleFormChange = (e) => {
-    setBookingForm({
-      ...bookingForm,
-      [e.target.name]: e.target.value,
-    });
-  };
+      // Create itinerary
+      const itinerary = `Safari to ${selectedPark.name} for ${
+        bookingForm.days
+      } days 
+Day 1: Arrival and check-in at ${selectedLodge.name}
+Day 2-${bookingForm.days - 1}: Game drives and wildlife viewing
+Day ${bookingForm.days}: Departure`;
 
-  const submitBooking = () => {
-    const totalPrice = calculatePrice(
-      selectedPark.name,
-      selectedDays,
-      bookingForm.travelers
-    );
-    const itinerary = generateItinerary(selectedPark.name, selectedDays);
-
-    const bookingDetails = {
-      park: selectedPark.name,
-      lodge: selectedLodge?.name || "Standard Accommodation",
-      days: selectedDays,
-      travelers: bookingForm.travelers,
-      totalPrice: totalPrice,
-      contactInfo: {
-        name: bookingForm.fullName,
+      // Prepare data for your backend
+      const bookingData = {
+        park: selectedPark.name,
+        lodge: selectedLodge.name,
+        days: bookingForm.days,
+        travelers: bookingForm.travelers,
+        totalPrice: totalPrice,
+        fullName: bookingForm.fullName,
         email: bookingForm.email,
         phone: bookingForm.phone,
-      },
-      itinerary: itinerary,
-      startDate: bookingForm.startDate,
-      message: bookingForm.message,
-    };
+        startDate: bookingForm.startDate || "Flexible",
+        message: bookingForm.message || "",
+        parkHighlights: selectedPark.highlights?.join(", ") || "N/A",
+        bestTime: selectedPark.bestTime || "N/A",
+        wildlife: selectedPark.wildlife || "N/A",
+        specialFeature: selectedPark.specialFeature || "N/A",
+        lodgeDescription: selectedLodge.description || "N/A",
+        itinerary: itinerary,
+      };
 
-    // Store complete booking data
-    localStorage.setItem("completeBooking", JSON.stringify(bookingDetails));
+      console.log("📤 Sending booking to backend...", bookingData);
 
-    if (bookingForm.contactMethod === "whatsapp") {
-      const message = `Safari Booking Request:%0A%0A
-Park: ${selectedPark.name}%0A
-Lodge: ${selectedLodge?.name || "Standard Accommodation"}%0A
-Duration: ${selectedDays} days%0A
-Travelers: ${bookingForm.travelers}%0A
-Start Date: ${bookingForm.startDate}%0A
-Total Price: $${totalPrice}%0A%0A
-Contact Information:%0A
-Name: ${bookingForm.fullName}%0A
-Email: ${bookingForm.email}%0A
-Phone: ${bookingForm.phone}%0A%0A
-Message: ${bookingForm.message}`;
+      // Send to your Flask backend
+      const response = await fetch("http://localhost:5000/api/send-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      });
 
-      window.open(`https://wa.me/27743545012?text=${message}`, "_blank");
-    } else {
-      const subject = `Safari Booking - ${selectedPark.name} - ${selectedDays} days`;
-      const body = `Dear Joztembo Tours,
+      const result = await response.json();
 
-I would like to book a safari with the following details:
+      if (result.success) {
+        alert(
+          "✅ Booking request sent successfully! Check your email for confirmation."
+        );
 
-Park: ${selectedPark.name}
-Lodge: ${selectedLodge?.name || "Standard Accommodation"}
-Duration: ${selectedDays} days
-Number of Travelers: ${bookingForm.travelers}
-Preferred Start Date: ${bookingForm.startDate}
-Total Price: $${totalPrice}
+        // Clear storage
+        localStorage.removeItem("safariBooking");
 
-My Contact Information:
-Full Name: ${bookingForm.fullName}
-Email: ${bookingForm.email}
-Phone: ${bookingForm.phone}
+        // Navigate home
+        navigate("/");
+      } else {
+        // If backend fails, use fallback email
+        sendDirectEmail(bookingData);
+      }
+    } catch (error) {
+      console.error("Error sending booking to backend:", error);
 
-Additional Message:
-${bookingForm.message}
+      // Fallback to direct email
+      const totalPrice =
+        selectedPark.pricePerDay * bookingForm.days * bookingForm.travelers;
+      const fallbackData = {
+        park: selectedPark.name,
+        lodge: selectedLodge.name,
+        days: bookingForm.days,
+        travelers: bookingForm.travelers,
+        totalPrice: totalPrice,
+        fullName: bookingForm.fullName,
+        email: bookingForm.email,
+        phone: bookingForm.phone,
+        startDate: bookingForm.startDate || "Flexible",
+        message: bookingForm.message || "",
+      };
 
-Please contact me to confirm this booking.
-
-Best regards,
-${bookingForm.fullName}`;
-
-      window.open(
-        `mailto:info@joztembotours.com?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`
-      );
+      sendDirectEmail(fallbackData);
     }
+  };
 
-    setShowBookingModal(false);
-    setSelectedPark(null);
-    setSelectedLodge(null);
-    localStorage.removeItem("currentBooking");
+  // Fallback email function
+  const sendDirectEmail = (data) => {
+    const emailBody = `
+Safari Booking Details:
+
+PARK: ${data.park}
+LODGE: ${data.lodge}
+DURATION: ${data.days} days
+TRAVELERS: ${data.travelers}
+START DATE: ${data.startDate}
+TOTAL PRICE: $${data.totalPrice}
+
+CUSTOMER DETAILS:
+Name: ${data.fullName}
+Email: ${data.email}
+Phone: ${data.phone}
+
+MESSAGE: ${data.message || "No additional message"}
+
+Thank you for choosing Joztembo Tours!
+    `.trim();
+
+    window.open(
+      `mailto:tembo4401@gmail.com?subject=Safari Booking: ${
+        data.park
+      }&body=${encodeURIComponent(emailBody)}`
+    );
+
+    // Clear storage
+    localStorage.removeItem("safariBooking");
+
+    // Show confirmation
+    alert(
+      "📧 Booking request sent via email! Check your inbox for confirmation."
+    );
+    navigate("/");
+  };
+
+  // Handle form changes
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setBookingForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
     <div className="min-h-screen bg-amber-50 py-12">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-4 font-serif">
-          Safari Packages
-        </h1>
-        <p className="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          {autoOpenPark
-            ? `Continue your ${autoOpenPark} booking experience. Select your preferred safari duration.`
-            : "Explore our curated safari experiences across Kenya's most iconic national parks. Choose your destination and discover unforgettable wildlife adventures."}
-        </p>
-
-        {/* Parks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {parks.map((park) => (
-            <div
-              key={park.id}
-              className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group border-2 ${
-                autoOpenPark === park.name
-                  ? "border-amber-500"
-                  : "border-transparent"
-              }`}
-              onClick={() => handleParkSelect(park)}
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={park.image}
-                  alt={park.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-xl font-bold">{park.name}</h3>
-                  <p className="text-amber-200 text-sm mt-1">
-                    From ${park.pricePerDay}/day
-                  </p>
-                </div>
-                {park.route && (
-                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    Detailed Page
-                  </div>
-                )}
-                {autoOpenPark === park.name && (
-                  <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-semibold animate-pulse">
-                    Selected
-                  </div>
-                )}
+      <div className="container mx-auto px-4 max-w-4xl">
+        {/* Progress Steps */}
+        <div className="flex justify-between mb-12">
+          {["Park", "Lodge", "Options", "Booking"].map((stepName, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  step > index + 1
+                    ? "bg-green-500"
+                    : step === index + 1
+                    ? "bg-amber-600"
+                    : "bg-gray-300"
+                } text-white font-bold`}
+              >
+                {step > index + 1 ? "✓" : index + 1}
               </div>
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">{park.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {park.highlights.slice(0, 3).map((highlight, index) => (
-                    <span
-                      key={index}
-                      className="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs"
-                    >
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-                <button className="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-300 group-hover:bg-amber-700">
-                  {park.route ? `Explore ${park.name}` : "View Safari Options"}
-                </button>
-              </div>
+              <span className="mt-2 text-sm">{stepName}</span>
             </div>
           ))}
         </div>
 
-        {/* Park Details Modal - For parks without dedicated pages */}
-        {showParkModal && selectedPark && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="relative">
-                <img
-                  src={selectedPark.image}
-                  alt={selectedPark.name}
-                  className="w-full h-64 object-cover"
-                />
+        {/* Step 1: Park Selection */}
+        {step === 1 && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">Select Your Safari Park</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {parks.map((park) => (
                 <button
-                  onClick={() => setShowParkModal(false)}
-                  className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+                  key={park.id}
+                  onClick={() => {
+                    setSelectedPark(park);
+                    handleNextStep();
+                  }}
+                  className="text-left p-4 border rounded-lg hover:border-amber-500 hover:bg-amber-50 transition-colors"
+                >
+                  <h3 className="font-bold text-gray-800">{park.name}</h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {park.description}
+                  </p>
+                  <p className="text-amber-600 text-sm mt-2 font-medium">
+                    From ${park.pricePerDay}/day
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Step 2: Lodge Selection */}
+        {step === 2 && selectedPark && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">
+              Select Lodge in {selectedPark.name}
+            </h2>
+            <div className="space-y-4">
+              {selectedPark.lodges.map((lodge, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setSelectedLodge(lodge);
+                    handleNextStep();
+                  }}
+                  className="w-full text-left p-4 border rounded-lg hover:border-amber-500 hover:bg-amber-50 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={lodge.image}
+                      alt={lodge.name}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                    <div>
+                      <h3 className="font-bold text-gray-800">{lodge.name}</h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {lodge.description}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={handleBackStep}
+              className="mt-6 text-amber-600 hover:text-amber-700 font-medium"
+            >
+              ← Back to Parks
+            </button>
+          </div>
+        )}
+
+        {/* Step 3: Options */}
+        {step === 3 && selectedPark && selectedLodge && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">Customize Your Safari</h2>
+
+            <div className="space-y-6">
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Number of Days
+                </label>
+                <select
+                  name="days"
+                  value={bookingForm.days}
+                  onChange={handleFormChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                >
+                  {[2, 3, 4, 5, 6, 7].map((d) => (
+                    <option key={d} value={d}>
+                      {d} days
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Number of Travelers
+                </label>
+                <select
+                  name="travelers"
+                  value={bookingForm.travelers}
+                  onChange={handleFormChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                >
+                  {[1, 2, 3, 4, 5, 6].map((t) => (
+                    <option key={t} value={t}>
+                      {t} traveler{t !== 1 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Preferred Start Date
+                </label>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={bookingForm.startDate}
+                  onChange={handleFormChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                />
+              </div>
+
+              {/* Summary */}
+              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                <h3 className="font-semibold text-gray-800 mb-2">
+                  Booking Summary
+                </h3>
+                <div className="space-y-1 text-sm">
+                  <p>
+                    <span className="font-medium">Park:</span>{" "}
+                    {selectedPark.name}
+                  </p>
+                  <p>
+                    <span className="font-medium">Lodge:</span>{" "}
+                    {selectedLodge.name}
+                  </p>
+                  <p>
+                    <span className="font-medium">Duration:</span>{" "}
+                    {bookingForm.days} days
+                  </p>
+                  <p>
+                    <span className="font-medium">Estimated Total:</span> $
+                    {selectedPark.pricePerDay *
+                      bookingForm.days *
+                      bookingForm.travelers}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <button
+                  onClick={handleBackStep}
+                  className="flex-1 py-3 px-6 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                >
+                  ← Back
+                </button>
+                <button
+                  onClick={handleNextStep}
+                  className="flex-1 py-3 px-6 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium transition-colors"
+                >
+                  Continue to Booking
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Step 4: Final Booking */}
+        {step === 4 && selectedPark && selectedLodge && (
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">Complete Your Booking</h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={bookingForm.fullName}
+                  onChange={handleFormChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={bookingForm.email}
+                    onChange={handleFormChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={bookingForm.phone}
+                    onChange={handleFormChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    placeholder="+254 XXX XXX XXX"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-2">
+                  Additional Message (Optional)
+                </label>
+                <textarea
+                  name="message"
+                  value={bookingForm.message}
+                  onChange={handleFormChange}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  rows="4"
+                  placeholder="Any special requirements, dietary restrictions, or specific requests..."
+                />
+              </div>
+
+              {/* Final Summary */}
+              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                <h3 className="font-semibold text-gray-800 mb-3">
+                  Final Booking Summary
+                </h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Park:</span>
+                    <span className="font-medium">{selectedPark.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Lodge:</span>
+                    <span className="font-medium">{selectedLodge.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Duration:</span>
+                    <span className="font-medium">{bookingForm.days} days</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Travelers:</span>
+                    <span className="font-medium">
+                      {bookingForm.travelers} people
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Start Date:</span>
+                    <span className="font-medium">
+                      {bookingForm.startDate || "Flexible"}
+                    </span>
+                  </div>
+                  <div className="pt-2 border-t border-amber-300">
+                    <div className="flex justify-between text-lg font-bold">
+                      <span>Total Price:</span>
+                      <span className="text-amber-700">
+                        $
+                        {selectedPark.pricePerDay *
+                          bookingForm.days *
+                          bookingForm.travelers}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <button
+                  onClick={handleBackStep}
+                  className="flex-1 py-3 px-6 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                >
+                  ← Back
+                </button>
+                <button
+                  onClick={handleSubmitBooking}
+                  className="flex-1 py-3 px-6 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -583,379 +666,11 @@ ${bookingForm.fullName}`;
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     />
                   </svg>
+                  Send Booking Request
                 </button>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h2 className="text-3xl font-bold">{selectedPark.name}</h2>
-                  <p className="text-amber-200">{selectedPark.description}</p>
-                </div>
-              </div>
-
-              <div className="p-6">
-                {/* Park Information */}
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                    About {selectedPark.name}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">
-                        Park Highlights
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedPark.highlights.map((highlight, index) => (
-                          <span
-                            key={index}
-                            className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm"
-                          >
-                            {highlight}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">
-                        Best Time to Visit
-                      </h4>
-                      <p className="text-amber-600">{selectedPark.bestTime}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">
-                        Key Wildlife
-                      </h4>
-                      <p className="text-gray-700">{selectedPark.wildlife}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">
-                        Special Feature
-                      </h4>
-                      <p className="text-gray-700">
-                        {selectedPark.specialFeature}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Available Lodges */}
-                {selectedPark.lodges && selectedPark.lodges.length > 0 && (
-                  <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                      Available Lodges
-                    </h3>
-                    <div className="space-y-4">
-                      {selectedPark.lodges.map((lodge, index) => (
-                        <div
-                          key={index}
-                          className="border border-gray-200 rounded-lg p-4"
-                        >
-                          <div className="flex flex-col md:flex-row gap-4">
-                            <img
-                              src={lodge.image}
-                              alt={lodge.name}
-                              className="w-full md:w-1/3 h-48 object-cover rounded-lg"
-                            />
-                            <div className="flex-1">
-                              <h4 className="text-xl font-bold text-gray-800 mb-2">
-                                {lodge.name}
-                              </h4>
-                              <p className="text-gray-600 mb-3">
-                                {lodge.description}
-                              </p>
-                              <div className="flex justify-between items-center">
-                                <span className="text-amber-600 font-semibold">
-                                  {lodge.priceRange}
-                                </span>
-                                <button
-                                  onClick={() => {
-                                    setSelectedLodge(lodge);
-                                    setShowItineraryModal(true);
-                                  }}
-                                  className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-300"
-                                >
-                                  Select Lodge
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Safari Packages */}
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">
-                    Choose Your Safari Duration
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[2, 3, 4, 5, 6, 7].map((days) => (
-                      <button
-                        key={days}
-                        onClick={() => handleDaysSelect(days)}
-                        className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-4 rounded-lg font-semibold transition-colors duration-300 text-center"
-                      >
-                        {days} Days
-                        <div className="text-sm font-normal mt-1">
-                          ${selectedPark.pricePerDay * days}/person
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {selectedLodge && (
-                  <div className="bg-amber-50 p-4 rounded-lg mb-6">
-                    <h4 className="font-semibold text-amber-800 mb-2">
-                      Selected Lodge:
-                    </h4>
-                    <p className="text-amber-700">{selectedLodge.name}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Itinerary Modal */}
-        {showItineraryModal && selectedPark && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                  {selectedDays} Days {selectedPark.name} Safari Itinerary
-                </h2>
-
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                    Daily Plan:
-                  </h3>
-                  <div className="space-y-3">
-                    {generateItinerary(selectedPark.name, selectedDays).map(
-                      (day, index) => (
-                        <div key={index} className="flex items-start space-x-3">
-                          <div className="bg-amber-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 text-sm font-semibold">
-                            {index + 1}
-                          </div>
-                          <p className="text-gray-700">{day}</p>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 p-4 rounded-lg mb-6">
-                  <h4 className="font-semibold text-amber-800 mb-2">
-                    Price Summary:
-                  </h4>
-                  <p className="text-amber-700">
-                    ${selectedPark.pricePerDay} × {selectedDays} days =
-                    <span className="font-bold">
-                      {" "}
-                      ${selectedPark.pricePerDay * selectedDays} per person
-                    </span>
-                  </p>
-                  {selectedLodge && (
-                    <p className="text-amber-700 text-sm mt-1">
-                      Including accommodation at {selectedLodge.name}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex gap-4">
-                  <button
-                    onClick={() => setShowItineraryModal(false)}
-                    className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={handleBooking}
-                    className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
-                  >
-                    Proceed to Book
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Booking Modal */}
-        {showBookingModal && selectedPark && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                  Complete Your Booking
-                </h2>
-
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={bookingForm.fullName}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                      required
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={bookingForm.email}
-                        onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Phone Number *
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={bookingForm.phone}
-                        onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Number of Travelers
-                      </label>
-                      <select
-                        name="travelers"
-                        value={bookingForm.travelers}
-                        onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                      >
-                        {[1, 2, 3, 4, 5, 6].map((num) => (
-                          <option key={num} value={num}>
-                            {num} {num === 1 ? "Person" : "People"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-gray-700 mb-2">
-                        Preferred Start Date
-                      </label>
-                      <input
-                        type="date"
-                        name="startDate"
-                        value={bookingForm.startDate}
-                        onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Preferred Contact Method
-                    </label>
-                    <div className="flex gap-4">
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name="contactMethod"
-                          value="whatsapp"
-                          checked={bookingForm.contactMethod === "whatsapp"}
-                          onChange={handleFormChange}
-                          className="mr-2"
-                        />
-                        WhatsApp
-                      </label>
-                      <label className="flex items-center">
-                        <input
-                          type="radio"
-                          name="contactMethod"
-                          value="email"
-                          checked={bookingForm.contactMethod === "email"}
-                          onChange={handleFormChange}
-                          className="mr-2"
-                        />
-                        Email
-                      </label>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-gray-700 mb-2">
-                      Additional Message (Optional)
-                    </label>
-                    <textarea
-                      name="message"
-                      value={bookingForm.message}
-                      onChange={handleFormChange}
-                      rows="4"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                      placeholder="Any special requirements or questions..."
-                    />
-                  </div>
-
-                  <div className="bg-amber-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-amber-800 mb-2">
-                      Booking Summary:
-                    </h4>
-                    <p>
-                      <strong>Park:</strong> {selectedPark.name}
-                    </p>
-                    <p>
-                      <strong>Duration:</strong> {selectedDays} days
-                    </p>
-                    <p>
-                      <strong>Lodge:</strong>{" "}
-                      {selectedLodge?.name || "Standard Accommodation"}
-                    </p>
-                    <p>
-                      <strong>Travelers:</strong> {bookingForm.travelers}
-                    </p>
-                    <p>
-                      <strong>Total Price:</strong> $
-                      {calculatePrice(
-                        selectedPark.name,
-                        selectedDays,
-                        bookingForm.travelers
-                      )}
-                    </p>
-                  </div>
-
-                  <div className="flex gap-4 pt-4">
-                    <button
-                      onClick={() => setShowBookingModal(false)}
-                      className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={submitBooking}
-                      className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
-                    >
-                      {bookingForm.contactMethod === "whatsapp"
-                        ? "Send via WhatsApp"
-                        : "Send via Email"}
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

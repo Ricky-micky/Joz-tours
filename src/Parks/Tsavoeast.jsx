@@ -12,6 +12,7 @@ const TsavoEast = () => {
     travelers: 1,
     contactMethod: "whatsapp",
     message: "",
+    startDate: "", // Added startDate field
   });
 
   const parkInfo = {
@@ -91,9 +92,8 @@ const TsavoEast = () => {
   };
 
   const calculatePrice = (days, priceRange) => {
-    const minTotal = days * priceRange.min;
-    const maxTotal = days * priceRange.max;
-    return { min: minTotal, max: maxTotal };
+    const avgPrice = (priceRange.min + priceRange.max) / 2;
+    return Math.round(avgPrice * days);
   };
 
   const handleRouteSelect = (route) => {
@@ -113,50 +113,146 @@ const TsavoEast = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // FIXED: Function to send booking to your backend
+  const sendBookingToBackend = async (bookingData) => {
+    try {
+      console.log("📤 Sending Tsavo East booking to backend...", bookingData);
+
+      // Send to your Flask backend
+      const response = await fetch("http://localhost:5000/api/send-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await response.json();
+
+      if (response.status === 400) {
+        console.error("Backend validation error:", result);
+        return { success: false, error: result.error };
+      }
+
+      if (result.success) {
+        alert(
+          "✅ Booking request sent successfully! Check your email for confirmation."
+        );
+        return { success: true, data: result };
+      } else {
+        console.error("Backend error:", result.error);
+        return { success: false, error: result.error };
+      }
+    } catch (error) {
+      console.error("Error sending to backend:", error);
+      return { success: false, error: error.message };
+    }
+  };
+
+  // FIXED: Function to send direct email (fallback)
+  const sendDirectEmail = (bookingData) => {
+    const totalPrice = calculatePrice(
+      bookingData.days,
+      selectedRoute.priceRange
+    );
+
+    const emailBody = `
+TSAVO EAST SAFARI BOOKING DETAILS:
+
+📍 PARK: ${bookingData.park}
+🚗 ROUTE/ITINERARY: ${bookingData.route}
+📅 DURATION: ${bookingData.days} days
+👥 TRAVELERS: ${bookingData.travelers}
+💰 ESTIMATED TOTAL PRICE: $${totalPrice}
+📝 ITINERARY TYPE: ${bookingData.route}
+
+📋 ITINERARY:
+${bookingData.itinerary.map((day, index) => `${index + 1}. ${day}`).join("\n")}
+
+👤 PERSONAL INFORMATION:
+- Full Name: ${bookingData.fullName}
+- Email: ${bookingData.email}
+- Phone: ${bookingData.phone}
+- Start Date: ${bookingData.startDate || "Flexible"}
+
+📞 PREFERRED CONTACT: ${bookingData.contactMethod}
+
+💬 ADDITIONAL MESSAGE:
+${bookingData.message || "No additional message"}
+
+📧 This booking was made from the Tsavo East National Park page.
+    `.trim();
+
+    window.open(
+      `mailto:tembo4401@gmail.com?subject=Tsavo East Safari Booking: ${
+        bookingData.route
+      } - ${bookingData.fullName}&body=${encodeURIComponent(emailBody)}`
+    );
+  };
+
+  // FIXED: Main submit function
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedRoute) {
+      alert("Please select a safari route first.");
+      return;
+    }
 
     const totalPrice = calculatePrice(selectedDays, selectedRoute.priceRange);
     const itinerary = generateItinerary(selectedDays, selectedRoute.name);
 
-    const bookingDetails = `
-TSAVO EAST SAFARI BOOKING DETAILS:
+    // FIXED: Prepare booking data to match your backend's expected fields
+    const bookingData = {
+      // REQUIRED FIELDS by backend:
+      park: parkInfo.name,
+      lodge: selectedRoute.name, // Backend expects 'lodge', using route name
+      days: selectedDays,
+      travelers: bookingForm.travelers,
+      totalPrice: totalPrice, // Backend expects 'totalPrice' (single value)
+      fullName: bookingForm.fullName,
+      email: bookingForm.email,
+      phone: bookingForm.phone,
 
-Personal Information:
-- Name: ${bookingForm.fullName}
-- Email: ${bookingForm.email}
-- Phone: ${bookingForm.phone}
-- Number of Travelers: ${bookingForm.travelers}
+      // OPTIONAL FIELDS that backend also accepts:
+      startDate: bookingForm.startDate || "Flexible",
+      message: bookingForm.message || "",
+      parkHighlights: parkInfo.highlights.join(", "),
+      bestTime: parkInfo.bestTime,
+      wildlife: parkInfo.wildlife,
+      specialFeature: parkInfo.specialFeature,
+      lodgeDescription: selectedRoute.description, // Using route description as lodge description
+      itinerary: itinerary.join("\n"), // Backend expects string, not array
 
-Safari Details:
-- Safari Route: ${selectedRoute.name}
-- Duration: ${selectedDays} days
-- Estimated Price: $${totalPrice.min} - $${totalPrice.max}
-- Preferred Contact: ${bookingForm.contactMethod}
+      // Additional info for tracking
+      bookingSource: "Tsavo East Park Page",
+      contactMethod: bookingForm.contactMethod,
+      route: selectedRoute.name, // Keep original route info
+    };
 
-Itinerary:
-${itinerary.map((day) => `  • ${day}`).join("\n")}
+    console.log(
+      "📝 Tsavo East booking data (formatted for backend):",
+      bookingData
+    );
 
-Additional Message: ${bookingForm.message}
+    // Try to send to backend first
+    const result = await sendBookingToBackend(bookingData);
 
-Thank you for choosing Tsavo East Safari Experience!
-    `.trim();
-
-    if (bookingForm.contactMethod === "whatsapp") {
-      const whatsappUrl = `https://wa.me/254712345678?text=${encodeURIComponent(
-        bookingDetails
-      )}`;
-      window.open(whatsappUrl, "_blank");
-    } else {
-      const subject = `Tsavo East Safari Booking - ${selectedRoute.name} - ${bookingForm.fullName}`;
-      const body = bookingDetails;
-      const mailtoUrl = `mailto:bookings@tsavoeastsafari.com?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoUrl;
+    if (!result.success) {
+      // If backend fails, use direct email fallback
+      console.log("⚠️ Backend failed, using fallback email...");
+      alert("⚠️ Using fallback email method...");
+      sendDirectEmail({
+        ...bookingData,
+        route: selectedRoute.name,
+        minPrice: selectedRoute.priceRange.min * selectedDays,
+        maxPrice: selectedRoute.priceRange.max * selectedDays,
+      });
     }
 
+    // Reset form and close modals
     setShowBookingModal(false);
+    setShowItineraryModal(false);
     setBookingForm({
       fullName: "",
       email: "",
@@ -164,6 +260,7 @@ Thank you for choosing Tsavo East Safari Experience!
       travelers: 1,
       contactMethod: "whatsapp",
       message: "",
+      startDate: "",
     });
   };
 
@@ -504,10 +601,7 @@ Thank you for choosing Tsavo East Safari Experience!
                     Estimated Total Price:
                   </span>
                   <span className="text-2xl font-bold text-orange-600">
-                    $
-                    {calculatePrice(selectedDays, selectedRoute.priceRange).min}{" "}
-                    - $
-                    {calculatePrice(selectedDays, selectedRoute.priceRange).max}
+                    ${calculatePrice(selectedDays, selectedRoute.priceRange)}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -626,6 +720,19 @@ Thank you for choosing Tsavo East Safari Experience!
 
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2">
+                    Preferred Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={bookingForm.startDate}
+                    onChange={handleFormChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
                     Preferred Contact Method *
                   </label>
                   <div className="flex space-x-6">
@@ -667,14 +774,57 @@ Thank you for choosing Tsavo East Safari Experience!
                     placeholder="Any special requirements, dietary restrictions, or questions about your Tsavo East safari..."
                   ></textarea>
                 </div>
+
+                {/* Booking Summary */}
+                <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                  <h3 className="font-semibold text-gray-800 mb-2">
+                    Booking Summary
+                  </h3>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Route:</span>{" "}
+                    {selectedRoute?.name}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Duration:</span>{" "}
+                    {selectedDays} days
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Estimated Total Price:</span>{" "}
+                    $
+                    {calculatePrice(
+                      selectedDays,
+                      selectedRoute?.priceRange || { min: 0, max: 0 }
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    All booking details will be sent to tembo4401@gmail.com
+                  </p>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 mt-6"
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 mt-6 flex items-center justify-center gap-2"
               >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
                 Send Booking Request
               </button>
+
+              <p className="text-xs text-gray-500 text-center mt-4">
+                Your booking details will be sent to tembo4401@gmail.com
+              </p>
             </form>
           </div>
         </div>

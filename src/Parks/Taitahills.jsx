@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-const Nakuru = () => {
+const Taitahills = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
@@ -17,54 +17,87 @@ const Nakuru = () => {
   });
 
   const parkInfo = {
-    id: 6,
-    name: "Lake Nakuru National Park",
+    id: 7,
+    name: "Taita Hills Wildlife Sanctuary",
     image:
-      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1575550959106-5a7defb8f8f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
     description:
-      "Famous for its flamingo populations, rhino sanctuary, and diverse birdlife in the Great Rift Valley.",
+      "A hidden gem in the Taita-Taveta County, featuring unique cloud forests, endemic species, and dramatic landscapes rising from the Tsavo plains.",
     highlights: [
-      "Millions of flamingos painting the lake pink",
-      "Rhino sanctuary with both black and white rhinos",
-      "Baboon cliff viewpoints",
-      "Over 450 bird species recorded",
-      "Rothschild giraffe conservation",
+      "Endemic Taita species found nowhere else",
+      "Ancient cloud forests with moss-covered trees",
+      "Spectacular views from Ngangao and Mbololo forests",
+      "Historic World War I sites",
+      "Bird watching paradise with rare species",
     ],
-    bestTime: "Year-round, but June-March for bird watching",
+    bestTime: "Year-round, but April-May & October-November for bird watching",
     wildlife:
-      "Flamingos, Pelicans, Rhinos, Rothschild Giraffes, Lions, Leopards, Baboons",
-    size: "188 km² - Compact park with diverse ecosystems",
+      "Taita Thrush, Taita White-eye, Taita Apalis, African Elephant, Buffalo, Leopard, Bushbuck, Sykes Monkey",
+    size: "28,000 hectares - Kenya's most important biodiversity hotspot",
     specialFeature:
-      "World's greatest bird spectacle with millions of flamingos",
+      "Home to 13 globally threatened bird species and Africa's most fragmented cloud forests",
   };
 
   const safariRoutes = [
     {
       id: 1,
-      name: "Lake Nakuru → Lake Naivasha → Masai Mara",
+      name: "Taita Hills → Tsavo West → Mzima Springs",
       description:
-        "Rift Valley lakes circuit combining bird watching with big game viewing in the Mara.",
-      priceRange: { min: 280, max: 380 },
+        "Explore the biodiversity hotspot of Taita Hills combined with the volcanic landscapes of Tsavo West.",
+      priceRange: { min: 270, max: 370 },
       duration: "4-6 days recommended",
-      highlights: ["Flamingo Lakes", "Rhino Sanctuary", "Big Cats"],
+      highlights: ["Endemic Species", "Cloud Forests", "Volcanic Landscapes"],
     },
     {
       id: 2,
-      name: "Lake Nakuru Birding Special",
+      name: "Taita Hills Birding Special",
       description:
-        "Focused bird watching experience with expert guides and extended lake viewing.",
-      priceRange: { min: 220, max: 320 },
-      duration: "2-3 days recommended",
-      highlights: ["Bird Watching", "Flamingo Spectacle", "Lake Views"],
+        "Focused bird watching tour targeting Taita's endemic and rare bird species with expert guides.",
+      priceRange: { min: 240, max: 340 },
+      duration: "3-5 days recommended",
+      highlights: ["Endemic Birds", "Forest Hiking", "Conservation Focus"],
     },
     {
       id: 3,
-      name: "Nakuru → Bogoria → Baringo Lakes Tour",
+      name: "Taita Hills Luxury Conservation Experience",
       description:
-        "Comprehensive Rift Valley lakes tour featuring flamingos, geysers, and diverse ecosystems.",
-      priceRange: { min: 250, max: 350 },
-      duration: "3-5 days recommended",
-      highlights: ["Three Lakes", "Hot Springs", "Cultural Visits"],
+        "Premium safari combining luxury accommodation with conservation activities and scientific insights.",
+      priceRange: { min: 350, max: 500 },
+      duration: "3-4 days recommended",
+      highlights: ["Luxury Lodges", "Conservation Tours", "Private Guides"],
+    },
+  ];
+
+  const endemicSpecies = [
+    {
+      name: "Taita Thrush",
+      scientific: "Turdus helleri",
+      status: "Critically Endangered",
+      habitat: "Cloud forests above 1400m",
+      description: "Found only in three forest fragments in Taita Hills",
+    },
+    {
+      name: "Taita White-eye",
+      scientific: "Zosterops silvanus",
+      status: "Endangered",
+      habitat: "Forest canopy",
+      description:
+        "One of Africa's rarest birds with less than 1000 individuals",
+    },
+    {
+      name: "Taita Apalis",
+      scientific: "Apalis fuscigularis",
+      status: "Critically Endangered",
+      habitat: "Forest undergrowth",
+      description: "World's population confined to Taita Hills",
+    },
+    {
+      name: "Taita Hills Warty Frog",
+      scientific: "Callulina sp.",
+      status: "Endangered",
+      habitat: "Forest floor",
+      description:
+        "Unique amphibian species adapted to cloud forest conditions",
     },
   ];
 
@@ -73,11 +106,11 @@ const Nakuru = () => {
     for (let i = 1; i <= days; i++) {
       if (i === 1) {
         itineraries.push(
-          `Day ${i}: Arrival at Lake Nakuru National Park, check-in and afternoon game drive to flamingo shores`
+          `Day ${i}: Arrival at Taita Hills, check-in at lodge and afternoon nature walk in the cloud forest`
         );
       } else if (i === days) {
         itineraries.push(
-          `Day ${i}: Morning visit to rhino sanctuary, breakfast, and departure from ${route
+          `Day ${i}: Morning bird watching for endemic species, breakfast, and departure from ${route
             .split("→")
             .pop()
             .trim()}`
@@ -85,13 +118,13 @@ const Nakuru = () => {
       } else {
         const parksInRoute = route.split("→").map((park) => park.trim());
         const currentParkIndex = Math.min(i - 2, parksInRoute.length - 1);
-        if (parksInRoute[currentParkIndex].includes("Nakuru")) {
+        if (parksInRoute[currentParkIndex].includes("Taita")) {
           itineraries.push(
-            `Day ${i}: Full day at Lake Nakuru with bird watching, rhino tracking, and baboon cliff visit`
+            `Day ${i}: Full day exploring Taita Hills with forest hikes, endemic species tracking, and conservation activities`
           );
         } else {
           itineraries.push(
-            `Day ${i}: Full day exploration of ${parksInRoute[currentParkIndex]} with wildlife viewing`
+            `Day ${i}: Full day exploration of ${parksInRoute[currentParkIndex]} with wildlife viewing and scenic experiences`
           );
         }
       }
@@ -124,7 +157,7 @@ const Nakuru = () => {
   // Function to send booking to backend
   const sendBookingToBackend = async (bookingData) => {
     try {
-      console.log("📤 Sending Lake Nakuru booking to backend...", bookingData);
+      console.log("📤 Sending Taita Hills booking to backend...", bookingData);
 
       const response = await fetch("http://localhost:5000/api/send-booking", {
         method: "POST",
@@ -156,9 +189,9 @@ const Nakuru = () => {
   // Function to send direct email (fallback)
   const sendDirectEmail = (bookingData) => {
     const emailBody = `
-LAKE NAKURU NATIONAL PARK SAFARI BOOKING DETAILS:
+TAITA HILLS WILDLIFE SANCTUARY BOOKING DETAILS:
 
-📍 PARK: ${bookingData.park}
+📍 SANCTUARY: ${bookingData.park}
 🚗 ROUTE/ITINERARY: ${bookingData.route}
 📅 DURATION: ${bookingData.days} days
 👥 TRAVELERS: ${bookingData.travelers}
@@ -177,17 +210,18 @@ ${bookingData.itinerary.map((day, index) => `${index + 1}. ${day}`).join("\n")}
 💬 ADDITIONAL MESSAGE:
 ${bookingData.message || "No additional message"}
 
-🦩 PARK HIGHLIGHTS:
+🌿 SANCTUARY HIGHLIGHTS:
 ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
 
-🐦 WILDLIFE: ${parkInfo.wildlife}
+🐦 ENDEMIC SPECIES: ${parkInfo.wildlife}
 📏 SIZE: ${parkInfo.size}
+🎯 SPECIAL FEATURE: ${parkInfo.specialFeature}
 
-📧 This booking was made from the Lake Nakuru National Park page.
+📧 This booking was made from the Taita Hills Wildlife Sanctuary page.
     `.trim();
 
     window.open(
-      `mailto:tembo4401@gmail.com?subject=Lake Nakuru Safari Booking: ${
+      `mailto:tembo4401@gmail.com?subject=Taita Hills Safari Booking: ${
         bookingData.route
       } - ${bookingData.fullName}&body=${encodeURIComponent(emailBody)}`
     );
@@ -202,7 +236,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
         icon: "warning",
         title: "No Route Selected",
         text: "Please select a safari route first.",
-        confirmButtonColor: "#2563eb",
+        confirmButtonColor: "#059669",
       });
       return;
     }
@@ -236,11 +270,11 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
       itinerary: itinerary.join("\n"),
 
       // Additional info for tracking
-      bookingSource: "Lake Nakuru Park Page",
+      bookingSource: "Taita Hills Sanctuary Page",
       route: selectedRoute.name,
     };
 
-    console.log("📝 Lake Nakuru booking data:", bookingData);
+    console.log("📝 Taita Hills booking data:", bookingData);
 
     // Try to send to backend first
     const result = await sendBookingToBackend(bookingData);
@@ -255,8 +289,8 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
         html: `
           <div class="text-left">
             <p class="mb-2"><strong>✅ Success!</strong></p>
-            <p class="mb-2">Your Lake Nakuru safari booking request has been submitted.</p>
-            <div class="bg-blue-50 p-3 rounded-lg my-3">
+            <p class="mb-2">Your Taita Hills safari booking request has been submitted.</p>
+            <div class="bg-emerald-50 p-3 rounded-lg my-3">
               <p class="text-sm"><strong>Route:</strong> ${selectedRoute.name}</p>
               <p class="text-sm"><strong>Duration:</strong> ${selectedDays} days</p>
               <p class="text-sm"><strong>Travelers:</strong> ${bookingForm.travelers}</p>
@@ -265,7 +299,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
             <p class="text-sm text-gray-600">Check your email for confirmation and further details.</p>
           </div>
         `,
-        confirmButtonColor: "#2563eb",
+        confirmButtonColor: "#059669",
         confirmButtonText: "Great!",
       });
     } else {
@@ -277,7 +311,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           <div class="text-left">
             <p class="mb-2">We're having trouble connecting to our booking system.</p>
             <p class="mb-4">Would you like to send your booking details via email instead?</p>
-            <div class="bg-blue-50 p-3 rounded-lg">
+            <div class="bg-emerald-50 p-3 rounded-lg">
               <p class="text-sm"><strong>Route:</strong> ${selectedRoute.name}</p>
               <p class="text-sm"><strong>Duration:</strong> ${selectedDays} days</p>
               <p class="text-sm"><strong>Total Price:</strong> $${totalPrice}</p>
@@ -285,7 +319,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         `,
         showCancelButton: true,
-        confirmButtonColor: "#2563eb",
+        confirmButtonColor: "#059669",
         cancelButtonColor: "#6b7280",
         confirmButtonText: "Yes, send via email",
         cancelButtonText: "Cancel",
@@ -302,7 +336,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           icon: "info",
           title: "Email Opened",
           text: "Please complete your booking by sending the pre-filled email.",
-          confirmButtonColor: "#2563eb",
+          confirmButtonColor: "#059669",
         });
       }
     }
@@ -329,7 +363,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-amber-50">
       {/* Hero Section */}
       <div className="relative h-96 overflow-hidden">
         <img
@@ -337,13 +371,24 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-blue-600/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/70 to-emerald-600/50"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
           <div className="container mx-auto">
             <h1 className="text-5xl font-bold mb-4 font-serif">
               {parkInfo.name}
             </h1>
             <p className="text-xl max-w-2xl">{parkInfo.description}</p>
+            <div className="mt-4 flex items-center space-x-2">
+              <span className="px-3 py-1 bg-emerald-600/80 rounded-full text-sm">
+                🌿 Biodiversity Hotspot
+              </span>
+              <span className="px-3 py-1 bg-emerald-600/80 rounded-full text-sm">
+                🦜 Endemic Species
+              </span>
+              <span className="px-3 py-1 bg-emerald-600/80 rounded-full text-sm">
+                ☁️ Cloud Forests
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -354,27 +399,27 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-6 font-serif">
-              Discover Lake Nakuru
+              Discover Taita Hills
             </h2>
             <p className="text-gray-700 text-lg mb-6 leading-relaxed">
-              Lake Nakuru National Park, located in the Great Rift Valley, is
-              world-renowned for its spectacular birdlife, particularly the
-              millions of flamingos that gather along its shores. The alkaline
-              lake creates the perfect environment for algae, which attracts
-              vast numbers of lesser and greater flamingos, creating a stunning
-              pink ribbon around the lake. The park is also a key rhino
-              sanctuary and home to the endangered Rothschild's giraffe.
+              The Taita Hills Wildlife Sanctuary is one of Kenya's most
+              important biodiversity conservation areas. These ancient cloud
+              forests rise dramatically from the Tsavo plains, creating isolated
+              "sky islands" that have evolved unique species found nowhere else
+              on Earth. The sanctuary protects the last remnants of Eastern Arc
+              mountain forests in Kenya, hosting critically endangered birds and
+              rare plants.
             </p>
 
             <div className="space-y-4">
               <div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                  Park Highlights
+                  Sanctuary Highlights
                 </h3>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {parkInfo.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-center text-gray-700">
-                      <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                      <span className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></span>
                       {highlight}
                     </li>
                   ))}
@@ -396,7 +441,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-2">
-                    Park Size
+                    Sanctuary Size
                   </h4>
                   <p className="text-gray-700">{parkInfo.size}</p>
                 </div>
@@ -410,65 +455,67 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-blue-200">
+          <div className="bg-white rounded-xl shadow-lg p-6 border border-emerald-200">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              Why Choose Lake Nakuru?
+              Why Choose Taita Hills?
             </h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <span className="text-blue-600 font-bold">✓</span>
+                <div className="bg-emerald-100 p-3 rounded-lg">
+                  <span className="text-emerald-600 font-bold">✓</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800">
-                    Flamingo Spectacle
+                    Unique Endemic Species
                   </h4>
                   <p className="text-gray-600 text-sm">
-                    Witness millions of flamingos creating a pink ribbon around
-                    the lake - one of Africa's greatest wildlife spectacles.
+                    Home to species found nowhere else on Earth, including
+                    critically endangered birds.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <span className="text-blue-600 font-bold">✓</span>
+                <div className="bg-emerald-100 p-3 rounded-lg">
+                  <span className="text-emerald-600 font-bold">✓</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800">
-                    Rhino Sanctuary
+                    Ancient Cloud Forests
                   </h4>
                   <p className="text-gray-600 text-sm">
-                    Excellent rhino viewing with both black and white rhino
-                    species in a protected sanctuary.
+                    Experience misty forests with moss-covered trees dating back
+                    millions of years.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <span className="text-blue-600 font-bold">✓</span>
+                <div className="bg-emerald-100 p-3 rounded-lg">
+                  <span className="text-emerald-600 font-bold">✓</span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800">Bird Paradise</h4>
+                  <h4 className="font-semibold text-gray-800">
+                    Conservation Focus
+                  </h4>
                   <p className="text-gray-600 text-sm">
-                    Over 450 bird species including pelicans, rare migrants, and
-                    endemic species.
+                    Support critical conservation efforts for globally
+                    threatened species.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <span className="text-blue-600 font-bold">✓</span>
+                <div className="bg-emerald-100 p-3 rounded-lg">
+                  <span className="text-emerald-600 font-bold">✓</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800">
-                    Compact & Diverse
+                    Dramatic Landscapes
                   </h4>
                   <p className="text-gray-600 text-sm">
-                    Easy to explore with varied landscapes from lake to
-                    woodland, cliff viewpoints to waterfalls.
+                    Spectacular views from forested peaks overlooking the vast
+                    Tsavo plains.
                   </p>
                 </div>
               </div>
@@ -476,88 +523,134 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
 
-        {/* Flamingo & Rhino Information */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
+        {/* Endemic Species Section */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-emerald-200">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
-            Flamingo Spectacle & Rhino Conservation
+            Endemic & Threatened Species
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {endemicSpecies.map((species, index) => (
+              <div
+                key={index}
+                className="bg-emerald-50 rounded-lg p-6 border border-emerald-100 hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-bold text-gray-800">{species.name}</h3>
+                  <span
+                    className={`px-2 py-1 text-xs rounded-full ${
+                      species.status === "Critically Endangered"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-amber-100 text-amber-800"
+                    }`}
+                  >
+                    {species.status}
+                  </span>
+                </div>
+                <p className="text-sm text-emerald-700 italic mb-2">
+                  {species.scientific}
+                </p>
+                <p className="text-sm text-gray-600 mb-3">{species.habitat}</p>
+                <p className="text-sm text-gray-700">{species.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-emerald-100 p-6 rounded-lg">
+            <h3 className="font-semibold text-gray-800 mb-3">
+              Conservation Importance
+            </h3>
+            <p className="text-gray-700">
+              Taita Hills is recognized as an Important Bird Area (IBA) and a
+              Key Biodiversity Area (KBA). The sanctuary's cloud forests are
+              among the world's most threatened ecosystems, with less than 1% of
+              original forest cover remaining. Conservation efforts focus on
+              habitat restoration, community engagement, and scientific research
+              to protect these unique species.
+            </p>
+          </div>
+        </div>
+
+        {/* Forest Information */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-emerald-200">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
+            Cloud Forest Ecosystems
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                The Pink Lake
+                Forest Fragments
               </h3>
               <p className="text-gray-700 mb-4">
-                Lake Nakuru's alkaline waters support massive blooms of
-                blue-green algae, which attract up to 1.5 million lesser
-                flamingos. When conditions are right, the lake surface appears
-                pink as far as the eye can see. The flamingo population
-                fluctuates based on water levels and algae availability,
-                creating a dynamic and ever-changing spectacle.
+                The Taita Hills consist of three main forest fragments: Ngangao
+                (120 ha), Chawia (86 ha), and Mbololo (220 ha). These "sky
+                islands" create unique microclimates that support specialized
+                flora and fauna. The forests receive moisture from the Indian
+                Ocean, creating constant mist and cloud cover that sustains the
+                ecosystem.
               </p>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  <strong>Lesser Flamingos:</strong> 1-1.5 million during peak
-                  season
+                  <span className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></span>
+                  <strong>Elevation:</strong> 1,400 - 2,200 meters above sea
+                  level
                 </li>
                 <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  <strong>Greater Flamingos:</strong> Thousands feed alongside
-                  their smaller cousins
+                  <span className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></span>
+                  <strong>Rainfall:</strong> 1,200 - 2,000 mm annually
                 </li>
                 <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  <strong>Best Viewing:</strong> Southern and eastern shores of
-                  the lake
+                  <span className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></span>
+                  <strong>Temperature:</strong> 15-25°C year-round
                 </li>
                 <li className="flex items-center">
-                  <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                  <strong>Water Levels:</strong> Fluctuating levels affect
-                  flamingo numbers
+                  <span className="w-2 h-2 bg-emerald-600 rounded-full mr-3"></span>
+                  <strong>Forest Age:</strong> Over 30 million years old
                 </li>
               </ul>
             </div>
-            <div className="bg-blue-50 p-6 rounded-lg">
+            <div className="bg-emerald-50 p-6 rounded-lg">
               <h4 className="font-semibold text-gray-800 mb-3">
-                Rhino Sanctuary Success
+                Forest Activities
               </h4>
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded mr-3">
-                    <span className="text-blue-600 font-bold">🦏</span>
+                  <div className="bg-emerald-100 p-2 rounded mr-3">
+                    <span className="text-emerald-600 font-bold">🌳</span>
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">
-                      Both Species Protected
+                      Forest Hiking Trails
                     </p>
                     <p className="text-sm text-gray-600">
-                      Home to both endangered black rhinos and white rhinos
+                      Well-marked trails through ancient forests with guided
+                      interpretation
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded mr-3">
-                    <span className="text-blue-600 font-bold">📈</span>
+                  <div className="bg-emerald-100 p-2 rounded mr-3">
+                    <span className="text-emerald-600 font-bold">🔭</span>
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">
-                      Conservation Success
+                      Bird Watching Platforms
                     </p>
                     <p className="text-sm text-gray-600">
-                      Rhino population steadily increasing through protection
+                      Strategic viewing points for observing endemic bird
+                      species
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="bg-blue-100 p-2 rounded mr-3">
-                    <span className="text-blue-600 font-bold">🌳</span>
+                  <div className="bg-emerald-100 p-2 rounded mr-3">
+                    <span className="text-emerald-600 font-bold">📚</span>
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">
-                      Giraffe Conservation
+                      Conservation Education
                     </p>
                     <p className="text-sm text-gray-600">
-                      Important sanctuary for endangered Rothschild's giraffe
+                      Learn about ongoing research and conservation efforts
                     </p>
                   </div>
                 </div>
@@ -569,22 +662,22 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
         {/* Safari Routes */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 font-serif">
-            Lake Nakuru Safari Packages
+            Taita Hills Safari Packages
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {safariRoutes.map((route) => (
               <div
                 key={route.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-blue-200"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-emerald-200"
                 onClick={() => handleRouteSelect(route)}
               >
-                <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
+                <div className="h-48 bg-gradient-to-r from-emerald-500 to-emerald-600 flex items-center justify-center">
                   <div className="text-white text-center p-4">
                     <h3 className="text-xl font-bold mb-2">
                       {route.name.split("→")[0].trim()}
                     </h3>
                     <div className="w-12 h-1 bg-white mx-auto mb-2"></div>
-                    <p className="text-blue-100">Starting Point</p>
+                    <p className="text-emerald-100">Starting Point</p>
                   </div>
                 </div>
                 <div className="p-6">
@@ -600,7 +693,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                       {route.highlights.map((highlight, idx) => (
                         <span
                           key={idx}
-                          className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm"
+                          className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm"
                         >
                           {highlight}
                         </span>
@@ -608,14 +701,14 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     </div>
                   </div>
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-blue-600 font-bold text-lg">
+                    <span className="text-emerald-600 font-bold text-lg">
                       ${route.priceRange.min} - ${route.priceRange.max} / day
                     </span>
-                    <span className="text-sm text-gray-500 bg-blue-50 px-2 py-1 rounded">
+                    <span className="text-sm text-gray-500 bg-emerald-50 px-2 py-1 rounded">
                       {route.duration}
                     </span>
                   </div>
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                  <button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
                     Select Package
                   </button>
                 </div>
@@ -624,104 +717,38 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
 
-        {/* Bird Species Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
-            Bird Watching Paradise
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Major Bird Species
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    Water Birds
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Lesser Flamingo</li>
-                    <li>• Greater Flamingo</li>
-                    <li>• Pelicans</li>
-                    <li>• African Fish Eagle</li>
-                    <li>• Herons & Egrets</li>
-                  </ul>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    Land Birds
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Verreaux's Eagle</li>
-                    <li>• Hornbills</li>
-                    <li>• Woodpeckers</li>
-                    <li>• Sunbirds</li>
-                    <li>• Kingfishers</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-semibold text-gray-800 mb-3">
-                Bird Watching Tips
-              </h4>
-              <ul className="space-y-2 text-gray-700 text-sm">
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Early morning and late afternoon for best bird activity
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Bring binoculars and bird identification guide
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Visit Makalia Falls for forest species
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Baboon Cliff for panoramic views and raptors
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Lake shorelines for flamingo congregations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
         {/* Additional Information */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-emerald-200">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
-            Plan Your Lake Nakuru Adventure
+            Plan Your Taita Hills Adventure
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-blue-600 font-bold text-xl">1</span>
+              <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-emerald-600 font-bold text-xl">1</span>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">
                 Choose Your Package
               </h3>
               <p className="text-gray-600 text-sm">
-                Select from our curated Lake Nakuru safari routes and durations.
+                Select from our curated Taita Hills safari routes and durations.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-blue-600 font-bold text-xl">2</span>
+              <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-emerald-600 font-bold text-xl">2</span>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">
                 Customize Itinerary
               </h3>
               <p className="text-gray-600 text-sm">
-                Tailor your safari days and bird watching activities.
+                Tailor your safari days and conservation activities to your
+                interests.
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-blue-600 font-bold text-xl">3</span>
+              <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-emerald-600 font-bold text-xl">3</span>
               </div>
               <h3 className="font-semibold text-gray-800 mb-2">
                 Book & Confirm
@@ -778,8 +805,8 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                       onClick={() => setSelectedDays(days)}
                       className={`px-4 py-2 rounded-lg border-2 transition-colors ${
                         selectedDays === days
-                          ? "bg-blue-600 text-white border-blue-600"
-                          : "bg-white text-gray-700 border-gray-300 hover:border-blue-400"
+                          ? "bg-emerald-600 text-white border-emerald-600"
+                          : "bg-white text-gray-700 border-gray-300 hover:border-emerald-400"
                       }`}
                     >
                       {days} Days
@@ -798,9 +825,9 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     (day, index) => (
                       <div
                         key={index}
-                        className="flex items-start space-x-4 p-4 bg-blue-50 rounded-lg border border-blue-200"
+                        className="flex items-start space-x-4 p-4 bg-emerald-50 rounded-lg border border-emerald-200"
                       >
-                        <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold flex-shrink-0">
+                        <div className="bg-emerald-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold flex-shrink-0">
                           {index + 1}
                         </div>
                         <p className="text-gray-700">{day}</p>
@@ -811,12 +838,12 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
               </div>
 
               {/* Price Estimate */}
-              <div className="bg-blue-100 p-4 rounded-lg mb-6 border border-blue-200">
+              <div className="bg-emerald-100 p-4 rounded-lg mb-6 border border-emerald-200">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-semibold">
                     Estimated Total Price:
                   </span>
-                  <span className="text-2xl font-bold text-blue-600">
+                  <span className="text-2xl font-bold text-emerald-600">
                     ${calculatePrice(selectedDays, selectedRoute.priceRange)}
                   </span>
                 </div>
@@ -828,7 +855,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
 
               <button
                 onClick={handleBookingConfirm}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
               >
                 Confirm & Book Now
               </button>
@@ -847,7 +874,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
             <form onSubmit={handleSubmit} className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-800">
-                  Book Your Lake Nakuru Safari
+                  Book Your Taita Hills Safari
                 </h2>
                 <button
                   type="button"
@@ -881,7 +908,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     value={bookingForm.fullName}
                     onChange={handleFormChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -896,7 +923,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     value={bookingForm.email}
                     onChange={handleFormChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -911,7 +938,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     value={bookingForm.phone}
                     onChange={handleFormChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
                     placeholder="+254 XXX XXX XXX"
                   />
                 </div>
@@ -924,7 +951,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     name="travelers"
                     value={bookingForm.travelers}
                     onChange={handleFormChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num}>
@@ -943,7 +970,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     name="startDate"
                     value={bookingForm.startDate}
                     onChange={handleFormChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
                   />
                 </div>
 
@@ -956,13 +983,13 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                     value={bookingForm.message}
                     onChange={handleFormChange}
                     rows="3"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    placeholder="Any special requirements, bird watching interests, photography preferences, or questions about flamingo viewing..."
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors"
+                    placeholder="Any special requirements, conservation interests, bird watching preferences, or questions about endemic species..."
                   ></textarea>
                 </div>
 
                 {/* Booking Summary */}
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
                   <h3 className="font-semibold text-gray-800 mb-2">
                     Booking Summary
                   </h3>
@@ -991,7 +1018,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none mt-6 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white py-3 px-6 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none mt-6 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
@@ -1048,4 +1075,4 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
   );
 };
 
-export default Nakuru;
+export default Taitahills;

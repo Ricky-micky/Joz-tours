@@ -11,7 +11,9 @@ import Tsavowest from "./Parks/Tsavowest";
 import TsavoEast from "./Parks/Tsavoeast";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import Taitahills from "./Parks/Taitahills";
 import Accommodation from "./Pages/Accommodation";
+import Saltlick from "./Parks/Salt-lick";
 
 export default function App() {
   return (
@@ -26,11 +28,13 @@ export default function App() {
             <Route path="/tsavoeast" element={<TsavoEast />} />
             <Route path="/tsavowest" element={<Tsavowest />} />
             <Route path="/masaimara" element={<Maasaimara />} />
-            <Route path="/Nakurupark" element={<Nakuru />} />
+            <Route path="/lakenakuru" element={<Nakuru />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact"element={<Contact />} />
             <Route path="/accommodation" element={<Accommodation />} />
             <Route path="nakurupark" element={<Nakuru />} /> 
+            <Route path="/taita-hills" element={<Taitahills />} />
+            <Route path="/salt-lick" element={<Saltlick />} />
 
           </Routes>
         </main>
