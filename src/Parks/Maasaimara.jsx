@@ -5,6 +5,8 @@ const Maasaimara = () => {
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [activeGalleryImage, setActiveGalleryImage] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     fullName: "",
     email: "",
@@ -17,8 +19,8 @@ const Maasaimara = () => {
   const parkInfo = {
     id: 4,
     name: "Maasai Mara National Reserve",
-    image:
-      "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: "/assets/parks/maasai-mara.jpg",
+    fallbackImage: "/assets/maasaimara-page.jpg",
     description:
       "Home to the Great Migration and abundant big cat populations, offering Africa's most spectacular wildlife spectacle.",
     highlights: [
@@ -34,6 +36,165 @@ const Maasaimara = () => {
     size: "1,510 km² - World's most famous wildlife reserve",
     specialFeature: "Annual Great Migration of over 1.5 million wildebeest",
   };
+
+  // Maasai Mara Gallery Images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "/assets/wildbeast-maraa.jpg",
+      fallback: "/assets/wildbeast-maraa2.jpg",
+      title: "Great Wildebeest Migration",
+      description: "Over 1.5 million wildebeest crossing the Mara River",
+      category: "wildlife",
+    },
+    {
+      id: 2,
+      src: "/assets/lionpride-mara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Lion Pride",
+      description: "Maasai Mara has one of Africa's highest lion densities",
+      category: "wildlife",
+    },
+    {
+      id: 3,
+      src: "/assets/hot-air-ballooning-maara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Hot Air Balloon Safari",
+      description: "Spectacular sunrise views over the savannah",
+      category: "activities",
+    },
+    {
+      id: 4,
+      src: "/assets/maasai-tribe-mara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Maasai Village Visit",
+      description: "Experience traditional Maasai culture and traditions",
+      category: "culture",
+    },
+    {
+      id: 5,
+      src: "/assets/cheetah-gallary-maara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Cheetah Hunting",
+      description: "Witness the world's fastest land animal in action",
+      category: "wildlife",
+    },
+    {
+      id: 6,
+      src: "/assets/maara-river.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Mara River",
+      description: "Famous for dramatic wildebeest river crossings",
+      category: "landscape",
+    },
+    {
+      id: 7,
+      src: "/assets/leopard-mara-accasia.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Leopard in Acacia Tree",
+      description: "Spot leopards resting in tree branches",
+      category: "wildlife",
+    },
+    {
+      id: 8,
+      src: "/assets/sunset-maara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "African Sunset",
+      description: "Breathtaking sunsets over the Mara plains",
+      category: "landscape",
+    },
+    {
+      id: 9,
+      src: "/assets/elephants-maara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Elephant Herd",
+      description: "Large herds of African elephants roaming freely",
+      category: "wildlife",
+    },
+    {
+      id: 10,
+      src: "/assets/Nile-crocodile.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Nile Crocodiles",
+      description: "Giant crocodiles waiting at river crossings",
+      category: "wildlife",
+    },
+    {
+      id: 11,
+      src: "/assets/rhino-maara.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Black Rhino",
+      description: "Rare sightings of endangered black rhinos",
+      category: "wildlife",
+    },
+    {
+      id: 12,
+      src: "/assets/maasai-worio.jpg",
+      fallback: "/assets/mara-gallery/default-gallery.jpg",
+      title: "Maasai Warriors Dance",
+      description: "Traditional jumping dance (Adumu) performances",
+      category: "culture",
+    },
+  ];
+
+  // Maasai Mara Attractions
+  const attractions = [
+    {
+      id: 1,
+      name: "Mara River Crossings",
+      image: "/assets/wildebeest-migration-maara.jpg",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description: "Witness the most dramatic event of the Great Migration",
+      bestTime: "July to October",
+      highlight: "Nature's greatest spectacle",
+    },
+    {
+      id: 2,
+      name: "Maasai Cultural Village",
+      image: "/assets/tribe-maara2.png",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description:
+        "Visit authentic Maasai manyattas and learn about traditions",
+      bestTime: "Year-round",
+      highlight: "Cultural immersion",
+    },
+    {
+      id: 3,
+      name: "Hot Air Balloon Safari",
+      image: "/assets/Hor-baloon.png",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description: "Sunrise balloon ride with champagne breakfast",
+      bestTime: "Year-round (weather permitting)",
+      highlight: "Aerial views of wildlife",
+    },
+    {
+      id: 4,
+      name: "Oloololo Escarpment",
+      image: "/assets/Oloololo Escarpment.png",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description: "Spectacular views over the entire Maasai Mara",
+      bestTime: "Year-round",
+      highlight: "Panoramic vistas",
+    },
+    {
+      id: 5,
+      name: "Mara Triangle",
+      image: "/assets/Mara Triangle .png",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description: "Less crowded area with excellent wildlife viewing",
+      bestTime: "July to October",
+      highlight: "Premium game viewing",
+    },
+    {
+      id: 6,
+      name: "Sand River",
+      image: "/assets/sand river.png",
+      fallback: "/assets/mara-attractions/default-attraction.jpg",
+      description: "Great spot for predator sightings and bird watching",
+      bestTime: "Year-round",
+      highlight: "Lion and leopard territory",
+    },
+  ];
 
   const safariRoutes = [
     {
@@ -116,6 +277,31 @@ const Maasaimara = () => {
       ...bookingForm,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Function to handle image errors
+  const handleImageError = (e, fallbackImage) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = fallbackImage;
+  };
+
+  // Function to open gallery modal
+  const openGalleryModal = (index) => {
+    setActiveGalleryImage(index);
+    setShowGalleryModal(true);
+  };
+
+  // Function to navigate gallery
+  const nextGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
   };
 
   // Function to send booking to backend
@@ -259,6 +445,7 @@ ${bookingData.message || "No additional message"}
     if (e.target === e.currentTarget) {
       setShowItineraryModal(false);
       setShowBookingModal(false);
+      setShowGalleryModal(false);
     }
   };
 
@@ -270,6 +457,7 @@ ${bookingData.message || "No additional message"}
           src={parkInfo.image}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
+          onError={(e) => handleImageError(e, parkInfo.fallbackImage)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-red-900/60 to-red-600/40"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -406,6 +594,126 @@ ${bookingData.message || "No additional message"}
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* NEW: Gallery Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Maasai Mara Gallery
+          </h2>
+          <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Explore the breathtaking beauty and wildlife of Maasai Mara through
+            our collection of images showcasing the park's most spectacular
+            moments.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            {galleryImages.slice(0, 8).map((image, index) => (
+              <div
+                key={image.id}
+                className="relative overflow-hidden rounded-lg shadow-md cursor-pointer group"
+                onClick={() => openGalleryModal(index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => handleImageError(e, image.fallback)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-3 text-white">
+                    <h4 className="font-semibold text-sm">{image.title}</h4>
+                    <p className="text-xs opacity-90">{image.description}</p>
+                  </div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-red-600 text-white text-xs px-2 py-1 rounded-full">
+                    {image.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => openGalleryModal(0)}
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              View Full Gallery ({galleryImages.length} images)
+            </button>
+          </div>
+        </div>
+
+        {/* NEW: Attractions Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Top Attractions in Maasai Mara
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map((attraction) => (
+              <div
+                key={attraction.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-red-100"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={attraction.image}
+                    alt={attraction.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    onError={(e) => handleImageError(e, attraction.fallback)}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {attraction.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {attraction.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-red-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Best: {attraction.bestTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-red-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Highlight: {attraction.highlight}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -585,6 +893,128 @@ ${bookingData.message || "No additional message"}
           </div>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh]">
+            <button
+              onClick={() => setShowGalleryModal(false)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevGalleryImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextGalleryImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Main Image */}
+            <div className="h-[70vh] flex items-center justify-center">
+              <img
+                src={galleryImages[activeGalleryImage].src}
+                alt={galleryImages[activeGalleryImage].title}
+                className="max-h-full max-w-full object-contain rounded-lg"
+                onError={(e) =>
+                  handleImageError(
+                    e,
+                    galleryImages[activeGalleryImage].fallback
+                  )
+                }
+              />
+            </div>
+
+            {/* Image Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-4 text-white">
+              <h3 className="text-xl font-bold mb-2">
+                {galleryImages[activeGalleryImage].title}
+              </h3>
+              <p className="mb-2">
+                {galleryImages[activeGalleryImage].description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-sm bg-red-600 px-3 py-1 rounded-full">
+                  {galleryImages[activeGalleryImage].category}
+                </span>
+                <span className="text-sm">
+                  {activeGalleryImage + 1} / {galleryImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex overflow-x-auto gap-2 mt-4 pb-2">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setActiveGalleryImage(index)}
+                  className={`flex-shrink-0 w-20 h-20 overflow-hidden rounded-lg border-2 transition-all ${
+                    index === activeGalleryImage
+                      ? "border-red-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, image.fallback)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (
