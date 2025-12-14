@@ -6,6 +6,8 @@ const TsavoWest = () => {
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [activeGalleryImage, setActiveGalleryImage] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     fullName: "",
@@ -19,8 +21,8 @@ const TsavoWest = () => {
   const parkInfo = {
     id: 3,
     name: "Tsavo West National Park",
-    image:
-      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: "/assets/parks/tsavo-west.jpg",
+    fallbackImage: "/assets/tsavowest-page.jpg",
     description:
       "Features Mzima Springs, volcanic landscapes, and diverse wildlife in a dramatic setting.",
     highlights: [
@@ -37,6 +39,164 @@ const TsavoWest = () => {
     specialFeature:
       "Famous Mzima Springs with crystal-clear water and hippo observatory",
   };
+
+  // Tsavo West Gallery Images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "/assets/mzima-springs-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Mzima Springs",
+      description: "Crystal-clear springs with underwater hippo observatory",
+      category: "attractions",
+    },
+    {
+      id: 2,
+      src: "/assets/shetani-lava-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Shetani Lava Flows",
+      description: "Dramatic volcanic lava formations",
+      category: "landscape",
+    },
+    {
+      id: 3,
+      src: "/assets/rhino-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Black Rhino",
+      description: "Endangered black rhino at Ngulia Rhino Sanctuary",
+      category: "wildlife",
+    },
+    {
+      id: 4,
+      src: "/assets/underwater-hippo-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Underwater Hippos",
+      description: "Hippos viewed through the underwater observatory",
+      category: "wildlife",
+    },
+    {
+      id: 5,
+      src: "/assets/lake-jipe-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Lake Jipe",
+      description: "Freshwater lake with abundant birdlife",
+      category: "landscape",
+    },
+    {
+      id: 6,
+      src: "/assets/chyulu-hills-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Chyulu Hills",
+      description: "Volcanic hills forming the park's dramatic backdrop",
+      category: "landscape",
+    },
+    {
+      id: 7,
+      src: "/assets/leopard-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Tsavo Leopard",
+      description: "Elusive leopard resting on rock formations",
+      category: "wildlife",
+    },
+    {
+      id: 8,
+      src: "/assets/tsavowest-sunset.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Volcanic Sunset",
+      description: "Stunning sunset over the volcanic landscape",
+      category: "landscape",
+    },
+    {
+      id: 9,
+      src: "/assets/elephant-lava-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Elephants on Lava",
+      description: "Elephants traversing the volcanic terrain",
+      category: "wildlife",
+    },
+    {
+      id: 10,
+      src: "/assets/bird-watching-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Bird Watching",
+      description: "Over 600 bird species recorded in the park",
+      category: "birds",
+    },
+    {
+      id: 11,
+      src: "/assets/poachers-lookout-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Poacher's Lookout",
+      description: "Historic lookout point with panoramic views",
+      category: "attractions",
+    },
+    {
+      id: 12,
+      src: "/assets/crocodile-mzima-tsavowest.jpg",
+      fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
+      title: "Mzima Crocodiles",
+      description: "Nile crocodiles basking near the springs",
+      category: "wildlife",
+    },
+  ];
+
+  // Tsavo West Attractions
+  const attractions = [
+    {
+      id: 1,
+      name: "Mzima Springs",
+      image: "/assets/mzima-springs-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Crystal-clear springs with underwater hippo observatory",
+      bestTime: "Year-round",
+      highlight: "Underwater wildlife viewing",
+    },
+    {
+      id: 2,
+      name: "Ngulia Rhino Sanctuary",
+      image: "/assets/ngulia-rhino-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Protected area for endangered black rhinos",
+      bestTime: "Early morning or evening",
+      highlight: "Rhino conservation success",
+    },
+    {
+      id: 3,
+      name: "Shetani Lava Flows",
+      image: "/assets/shetani-lava-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Dramatic volcanic lava formations from 200 years ago",
+      bestTime: "Morning for photography",
+      highlight: "Geological wonder",
+    },
+    {
+      id: 4,
+      name: "Lake Jipe",
+      image: "/assets/lake-jipe-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Freshwater lake shared with Tanzania, rich in birdlife",
+      bestTime: "Dry season",
+      highlight: "Bird watching paradise",
+    },
+    {
+      id: 5,
+      name: "Poacher's Lookout",
+      image: "/assets/poachers-lookout-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Historic viewpoint with panoramic park views",
+      bestTime: "Sunrise or sunset",
+      highlight: "360-degree vistas",
+    },
+    {
+      id: 6,
+      name: "Chaimu Crater",
+      image: "/assets/chaimu-crater-attraction.jpg",
+      fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
+      description: "Volcanic crater that can be climbed for views",
+      bestTime: "Cool morning hours",
+      highlight: "Hiking opportunity",
+    },
+  ];
 
   const safariRoutes = [
     {
@@ -123,6 +283,31 @@ const TsavoWest = () => {
       ...bookingForm,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Function to handle image errors
+  const handleImageError = (e, fallbackImage) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = fallbackImage;
+  };
+
+  // Function to open gallery modal
+  const openGalleryModal = (index) => {
+    setActiveGalleryImage(index);
+    setShowGalleryModal(true);
+  };
+
+  // Function to navigate gallery
+  const nextGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
   };
 
   // Function to send booking to backend
@@ -327,6 +512,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
     if (e.target === e.currentTarget) {
       setShowItineraryModal(false);
       setShowBookingModal(false);
+      setShowGalleryModal(false);
     }
   };
 
@@ -338,6 +524,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           src={parkInfo.image}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
+          onError={(e) => handleImageError(e, parkInfo.fallbackImage)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/60 to-purple-600/40"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -471,6 +658,125 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* NEW: Gallery Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Tsavo West Gallery
+          </h2>
+          <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Explore the dramatic volcanic landscapes and unique attractions of
+            Tsavo West through our collection of stunning images.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            {galleryImages.slice(0, 8).map((image, index) => (
+              <div
+                key={image.id}
+                className="relative overflow-hidden rounded-lg shadow-md cursor-pointer group"
+                onClick={() => openGalleryModal(index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => handleImageError(e, image.fallback)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-3 text-white">
+                    <h4 className="font-semibold text-sm">{image.title}</h4>
+                    <p className="text-xs opacity-90">{image.description}</p>
+                  </div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">
+                    {image.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => openGalleryModal(0)}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              View Full Gallery ({galleryImages.length} images)
+            </button>
+          </div>
+        </div>
+
+        {/* NEW: Attractions Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Top Attractions in Tsavo West
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map((attraction) => (
+              <div
+                key={attraction.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-purple-100"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={attraction.image}
+                    alt={attraction.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    onError={(e) => handleImageError(e, attraction.fallback)}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {attraction.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {attraction.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-purple-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Best: {attraction.bestTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-purple-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Highlight: {attraction.highlight}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -663,6 +969,128 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh]">
+            <button
+              onClick={() => setShowGalleryModal(false)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevGalleryImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextGalleryImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Main Image */}
+            <div className="h-[70vh] flex items-center justify-center">
+              <img
+                src={galleryImages[activeGalleryImage].src}
+                alt={galleryImages[activeGalleryImage].title}
+                className="max-h-full max-w-full object-contain rounded-lg"
+                onError={(e) =>
+                  handleImageError(
+                    e,
+                    galleryImages[activeGalleryImage].fallback
+                  )
+                }
+              />
+            </div>
+
+            {/* Image Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-4 text-white">
+              <h3 className="text-xl font-bold mb-2">
+                {galleryImages[activeGalleryImage].title}
+              </h3>
+              <p className="mb-2">
+                {galleryImages[activeGalleryImage].description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-sm bg-purple-600 px-3 py-1 rounded-full">
+                  {galleryImages[activeGalleryImage].category}
+                </span>
+                <span className="text-sm">
+                  {activeGalleryImage + 1} / {galleryImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex overflow-x-auto gap-2 mt-4 pb-2">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setActiveGalleryImage(index)}
+                  className={`flex-shrink-0 w-20 h-20 overflow-hidden rounded-lg border-2 transition-all ${
+                    index === activeGalleryImage
+                      ? "border-purple-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, image.fallback)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (

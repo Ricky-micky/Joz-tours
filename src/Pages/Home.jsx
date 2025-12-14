@@ -66,7 +66,7 @@ export default function Home() {
     },
     {
       id: 5,
-      image: "/assets/massaislideshow.jpg",
+      image: "/assets/maasai-slide.png",
       fallbackImage:
         "https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
       title: "Maasai Culture and Traditions",
@@ -411,7 +411,7 @@ export default function Home() {
             "/assets/AA-ambo1.png",
             "/assets/AA-ambo2.png",
             "/assets/AA-ambo3.png",
-                  ],
+          ],
         },
       ],
     },
@@ -438,14 +438,15 @@ export default function Home() {
       lodges: [
         {
           name: "Taita Hills Safari Resort",
-          image: "/assets/lodges/taita-hills-resort.jpg",
+          image: "/assets/taitaweast.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Luxurious resort with stunning views of the Taita Hills, offering comfortable accommodations and excellent game viewing.",
           gallery: [
-            "/assets/lodges/gallery/taita-resort-1.jpg",
-            "/assets/lodges/gallery/taita-resort-2.jpg",
-            "/assets/lodges/gallery/taita-resort-3.jpg",
+            "/assets/taitaweast1.png",
+            "/assets/taitaweast2.png",
+            "/assets/taitaweast3.png",
+            "/assets/taitaweast4.png",
           ],
         },
       ],
@@ -472,14 +473,15 @@ export default function Home() {
       lodges: [
         {
           name: "Salt Lick Safari Lodge",
-          image: "/assets/lodges/salt-lick-lodge.jpg",
+          image: "/assets/salt.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Iconic tree-top lodge offering unique elevated views of wildlife at the salt licks and waterholes.",
           gallery: [
-            "/assets/lodges/gallery/salt-lick-1.jpg",
-            "/assets/lodges/gallery/salt-lick-2.jpg",
-            "/assets/lodges/gallery/salt-lick-3.jpg",
+            "/assets/salt1.png",
+            "/assets/salt2.png",
+            "/assets/salt3.png",
+            "/assets/salt4.png",
           ],
         },
       ],

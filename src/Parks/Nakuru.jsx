@@ -6,6 +6,8 @@ const Nakuru = () => {
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [activeGalleryImage, setActiveGalleryImage] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     fullName: "",
@@ -19,8 +21,8 @@ const Nakuru = () => {
   const parkInfo = {
     id: 6,
     name: "Lake Nakuru National Park",
-    image:
-      "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: "/assets/nakuru-ntp.png",
+    fallbackImage: "/assets/nakuru-page.jpg",
     description:
       "Famous for its flamingo populations, rhino sanctuary, and diverse birdlife in the Great Rift Valley.",
     highlights: [
@@ -37,6 +39,165 @@ const Nakuru = () => {
     specialFeature:
       "World's greatest bird spectacle with millions of flamingos",
   };
+
+  // Lake Nakuru Gallery Images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "/assets/fla-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Pink Flamingo Sea",
+      description:
+        "Millions of flamingos creating a pink ribbon around the lake",
+      category: "birds",
+    },
+    {
+      id: 2,
+      src: "/assets/nakuru-ntp.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Black Rhino",
+      description: "Endangered black rhino in the protected sanctuary",
+      category: "wildlife",
+    },
+    {
+      id: 3,
+      src: "/assets/cli-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Baboon Cliff View",
+      description: "Panoramic views from the famous Baboon Cliff",
+      category: "landscape",
+    },
+    {
+      id: 4,
+      src: "/assets/peli-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Great White Pelicans",
+      description: "Large flocks of pelicans fishing in the lake",
+      category: "birds",
+    },
+    {
+      id: 5,
+      src: "/assets/gir-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Rothschild's Giraffe",
+      description: "Endangered giraffe species found in the park",
+      category: "wildlife",
+    },
+    {
+      id: 6,
+      src: "/assets/mak-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Makalia Falls",
+      description: "Beautiful waterfall within the park",
+      category: "landscape",
+    },
+    {
+      id: 7,
+      src: "/assets/lion-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Tree-Climbing Lions",
+      description: "Lions resting in acacia trees",
+      category: "wildlife",
+    },
+    {
+      id: 8,
+      src: "/assets/sun-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Lake Sunset",
+      description: "Stunning sunset over Lake Nakuru",
+      category: "landscape",
+    },
+    {
+      id: 9,
+      src: "/assets/bird-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Bird Watching",
+      description: "Over 450 bird species recorded in the park",
+      category: "birds",
+    },
+    {
+      id: 10,
+      src: "/assets/ri-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "White Rhino",
+      description: "White rhino grazing in the sanctuary",
+      category: "wildlife",
+    },
+    {
+      id: 11,
+      src: "/assets/re-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Rift Valley View",
+      description: "Spectacular views of the Great Rift Valley",
+      category: "landscape",
+    },
+    {
+      id: 12,
+      src: "/assets/leo-nakuru.png",
+      fallback: "/assets/nakuru-gallery/default-gallery.jpg",
+      title: "Leopard Sighting",
+      description: "Elusive leopard in the acacia woodlands",
+      category: "wildlife",
+    },
+  ];
+
+  // Lake Nakuru Attractions
+  const attractions = [
+    {
+      id: 1,
+      name: "Baboon Cliff",
+      image: "/assets/babo-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Spectacular viewpoint overlooking the entire lake",
+      bestTime: "Sunrise or sunset",
+      highlight: "Panoramic lake views",
+    },
+    {
+      id: 2,
+      name: "Makalia Falls",
+      image: "/assets/mka-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Beautiful waterfall in the southern part of the park",
+      bestTime: "After rainy season",
+      highlight: "Refreshing waterfall",
+    },
+    {
+      id: 3,
+      name: "Rhino Sanctuary",
+      image: "/assets/ rino-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Protected area for both black and white rhinos",
+      bestTime: "Early morning or late afternoon",
+      highlight: "Rhino conservation",
+    },
+    {
+      id: 4,
+      name: "Lion Hill",
+      image: "/assets/hill-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Viewpoint with excellent game viewing opportunities",
+      bestTime: "Morning",
+      highlight: "Predator sightings",
+    },
+    {
+      id: 5,
+      name: "Lake Shore Drive",
+      image: "/assets/shore-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Scenic drive along the flamingo-filled shoreline",
+      bestTime: "Any time of day",
+      highlight: "Flamingo congregations",
+    },
+    {
+      id: 6,
+      name: "Out of Africa Lookout",
+      image: "/assets/pic-nakuru.png",
+      fallback: "/assets/nakuru-attractions/default-attraction.jpg",
+      description: "Historic viewpoint made famous by the movie",
+      bestTime: "Morning",
+      highlight: "Cinematic views",
+    },
+  ];
 
   const safariRoutes = [
     {
@@ -119,6 +280,31 @@ const Nakuru = () => {
       ...bookingForm,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Function to handle image errors
+  const handleImageError = (e, fallbackImage) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = fallbackImage;
+  };
+
+  // Function to open gallery modal
+  const openGalleryModal = (index) => {
+    setActiveGalleryImage(index);
+    setShowGalleryModal(true);
+  };
+
+  // Function to navigate gallery
+  const nextGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
   };
 
   // Function to send booking to backend
@@ -325,6 +511,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
     if (e.target === e.currentTarget) {
       setShowItineraryModal(false);
       setShowBookingModal(false);
+      setShowGalleryModal(false);
     }
   };
 
@@ -336,6 +523,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           src={parkInfo.image}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
+          onError={(e) => handleImageError(e, parkInfo.fallbackImage)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-blue-600/40"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -476,6 +664,184 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
 
+        {/* NEW: Gallery Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Lake Nakuru Gallery
+          </h2>
+          <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Experience the stunning pink spectacle of Lake Nakuru through our
+            collection of images showcasing flamingos, wildlife, and scenic
+            landscapes.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            {galleryImages.slice(0, 8).map((image, index) => (
+              <div
+                key={image.id}
+                className="relative overflow-hidden rounded-lg shadow-md cursor-pointer group"
+                onClick={() => openGalleryModal(index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => handleImageError(e, image.fallback)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-3 text-white">
+                    <h4 className="font-semibold text-sm">{image.title}</h4>
+                    <p className="text-xs opacity-90">{image.description}</p>
+                  </div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
+                    {image.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => openGalleryModal(0)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              View Full Gallery ({galleryImages.length} images)
+            </button>
+          </div>
+        </div>
+
+        {/* NEW: Attractions Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Top Attractions in Lake Nakuru
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map((attraction) => (
+              <div
+                key={attraction.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-blue-100"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={attraction.image}
+                    alt={attraction.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    onError={(e) => handleImageError(e, attraction.fallback)}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {attraction.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {attraction.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-blue-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Best: {attraction.bestTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-blue-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Highlight: {attraction.highlight}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Safari Routes */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 font-serif">
+            Lake Nakuru Safari Packages
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {safariRoutes.map((route) => (
+              <div
+                key={route.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-blue-200"
+                onClick={() => handleRouteSelect(route)}
+              >
+                <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
+                  <div className="text-white text-center p-4">
+                    <h3 className="text-xl font-bold mb-2">
+                      {route.name.split("→")[0].trim()}
+                    </h3>
+                    <div className="w-12 h-1 bg-white mx-auto mb-2"></div>
+                    <p className="text-blue-100">Starting Point</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">
+                    {route.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{route.description}</p>
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2">
+                      Highlights:
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {route.highlights.map((highlight, idx) => (
+                        <span
+                          key={idx}
+                          className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm"
+                        >
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-blue-600 font-bold text-lg">
+                      ${route.priceRange.min} - ${route.priceRange.max} / day
+                    </span>
+                    <span className="text-sm text-gray-500 bg-blue-50 px-2 py-1 rounded">
+                      {route.duration}
+                    </span>
+                  </div>
+                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    Select Package
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Flamingo & Rhino Information */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
@@ -566,131 +932,6 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
 
-        {/* Safari Routes */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 font-serif">
-            Lake Nakuru Safari Packages
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {safariRoutes.map((route) => (
-              <div
-                key={route.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-blue-200"
-                onClick={() => handleRouteSelect(route)}
-              >
-                <div className="h-48 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
-                  <div className="text-white text-center p-4">
-                    <h3 className="text-xl font-bold mb-2">
-                      {route.name.split("→")[0].trim()}
-                    </h3>
-                    <div className="w-12 h-1 bg-white mx-auto mb-2"></div>
-                    <p className="text-blue-100">Starting Point</p>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">
-                    {route.name}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{route.description}</p>
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-gray-700 mb-2">
-                      Highlights:
-                    </h4>
-                    <div className="flex flex-wrap gap-1">
-                      {route.highlights.map((highlight, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm"
-                        >
-                          {highlight}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-blue-600 font-bold text-lg">
-                      ${route.priceRange.min} - ${route.priceRange.max} / day
-                    </span>
-                    <span className="text-sm text-gray-500 bg-blue-50 px-2 py-1 rounded">
-                      {route.duration}
-                    </span>
-                  </div>
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                    Select Package
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bird Species Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
-            Bird Watching Paradise
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Major Bird Species
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    Water Birds
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Lesser Flamingo</li>
-                    <li>• Greater Flamingo</li>
-                    <li>• Pelicans</li>
-                    <li>• African Fish Eagle</li>
-                    <li>• Herons & Egrets</li>
-                  </ul>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    Land Birds
-                  </h4>
-                  <ul className="text-sm text-gray-700 space-y-1">
-                    <li>• Verreaux's Eagle</li>
-                    <li>• Hornbills</li>
-                    <li>• Woodpeckers</li>
-                    <li>• Sunbirds</li>
-                    <li>• Kingfishers</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-semibold text-gray-800 mb-3">
-                Bird Watching Tips
-              </h4>
-              <ul className="space-y-2 text-gray-700 text-sm">
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Early morning and late afternoon for best bird activity
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Bring binoculars and bird identification guide
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Visit Makalia Falls for forest species
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Baboon Cliff for panoramic views and raptors
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 font-bold mr-2">•</span>
-                  Lake shorelines for flamingo congregations
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
         {/* Additional Information */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-blue-200">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
@@ -733,6 +974,128 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh]">
+            <button
+              onClick={() => setShowGalleryModal(false)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevGalleryImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextGalleryImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Main Image */}
+            <div className="h-[70vh] flex items-center justify-center">
+              <img
+                src={galleryImages[activeGalleryImage].src}
+                alt={galleryImages[activeGalleryImage].title}
+                className="max-h-full max-w-full object-contain rounded-lg"
+                onError={(e) =>
+                  handleImageError(
+                    e,
+                    galleryImages[activeGalleryImage].fallback
+                  )
+                }
+              />
+            </div>
+
+            {/* Image Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-4 text-white">
+              <h3 className="text-xl font-bold mb-2">
+                {galleryImages[activeGalleryImage].title}
+              </h3>
+              <p className="mb-2">
+                {galleryImages[activeGalleryImage].description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-sm bg-blue-600 px-3 py-1 rounded-full">
+                  {galleryImages[activeGalleryImage].category}
+                </span>
+                <span className="text-sm">
+                  {activeGalleryImage + 1} / {galleryImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex overflow-x-auto gap-2 mt-4 pb-2">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setActiveGalleryImage(index)}
+                  className={`flex-shrink-0 w-20 h-20 overflow-hidden rounded-lg border-2 transition-all ${
+                    index === activeGalleryImage
+                      ? "border-blue-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, image.fallback)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (

@@ -6,6 +6,8 @@ const Amboseli = () => {
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [activeGalleryImage, setActiveGalleryImage] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     fullName: "",
@@ -19,8 +21,8 @@ const Amboseli = () => {
   const parkInfo = {
     id: 1,
     name: "Amboseli National Park",
-    image:
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: "/assets/parks/amboseli.jpg",
+    fallbackImage: "/assets/amboseli-page.jpg",
     description:
       "Famous for its large elephant herds and stunning views of Mount Kilimanjaro.",
     highlights: [
@@ -35,6 +37,164 @@ const Amboseli = () => {
     size: "392 km² - Kenya's second most popular national park",
     specialFeature: "Iconic elephant herds with Mount Kilimanjaro backdrop",
   };
+
+  // Amboseli Gallery Images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "/assets/elephants-kilimanjaro-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Elephants with Kilimanjaro",
+      description: "Iconic view of elephants against Africa's highest peak",
+      category: "wildlife",
+    },
+    {
+      id: 2,
+      src: "/assets/sunrise-kilimanjaro-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Kilimanjaro Sunrise",
+      description: "Stunning sunrise over Mount Kilimanjaro",
+      category: "landscape",
+    },
+    {
+      id: 3,
+      src: "/assets/elephant-herd-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Elephant Herd",
+      description: "Large herds of elephants in their natural habitat",
+      category: "wildlife",
+    },
+    {
+      id: 4,
+      src: "/assets/amboseli-swamps.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Enkongo Narok Swamp",
+      description: "Permanent swamps fed by Kilimanjaro's underground rivers",
+      category: "landscape",
+    },
+    {
+      id: 5,
+      src: "/assets/lion-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Amboseli Lions",
+      description: "Majestic lions resting in the shade",
+      category: "wildlife",
+    },
+    {
+      id: 6,
+      src: "/assets/maasai-culture-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Maasai Culture",
+      description: "Traditional Maasai warriors in Amboseli",
+      category: "culture",
+    },
+    {
+      id: 7,
+      src: "/assets/flamingos-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Lesser Flamingos",
+      description: "Flamingos gathering in Amboseli's alkaline lakes",
+      category: "birds",
+    },
+    {
+      id: 8,
+      src: "/assets/amboseli-sunset.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "African Sunset",
+      description: "Breathtaking sunset over the Amboseli plains",
+      category: "landscape",
+    },
+    {
+      id: 9,
+      src: "/assets/cheetah-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Cheetah Hunting",
+      description: "Cheetahs scanning the open plains for prey",
+      category: "wildlife",
+    },
+    {
+      id: 10,
+      src: "/assets/observation-hill-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Observation Hill",
+      description: "360-degree panoramic views of the entire park",
+      category: "landscape",
+    },
+    {
+      id: 11,
+      src: "/assets/buffalo-herd-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Cape Buffalo",
+      description: "Large herds of African buffalo grazing",
+      category: "wildlife",
+    },
+    {
+      id: 12,
+      src: "/assets/bird-watching-amboseli.jpg",
+      fallback: "/assets/amboseli-gallery/default-gallery.jpg",
+      title: "Bird Watching",
+      description: "Over 400 bird species recorded in Amboseli",
+      category: "birds",
+    },
+  ];
+
+  // Amboseli Attractions
+  const attractions = [
+    {
+      id: 1,
+      name: "Observation Hill",
+      image: "/assets/observation-hill-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "360-degree viewpoint overlooking the entire park",
+      bestTime: "Sunrise or sunset",
+      highlight: "Panoramic Kilimanjaro views",
+    },
+    {
+      id: 2,
+      name: "Enkongo Narok Swamp",
+      image: "/assets/enkongo-swamp-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "Permanent swamp attracting elephants and hippos",
+      bestTime: "Dry season",
+      highlight: "Elephant drinking spot",
+    },
+    {
+      id: 3,
+      name: "Sinet Delta",
+      image: "/assets/sinet-delta-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "River delta with diverse birdlife",
+      bestTime: "Year-round",
+      highlight: "Bird watching paradise",
+    },
+    {
+      id: 4,
+      name: "Kitirua Conservancy",
+      image: "/assets/kitirua-conservancy-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "Community-owned conservancy bordering the park",
+      bestTime: "Year-round",
+      highlight: "Cultural interactions",
+    },
+    {
+      id: 5,
+      name: "Amboseli Research Centre",
+      image: "/assets/research-centre-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "Long-term elephant research facility",
+      bestTime: "Year-round",
+      highlight: "Scientific insights",
+    },
+    {
+      id: 6,
+      name: "Kimana Gate Area",
+      image: "/assets/kimana-gate-attraction.jpg",
+      fallback: "/assets/amboseli-attractions/default-attraction.jpg",
+      description: "Entry point with excellent wildlife viewing",
+      bestTime: "Early morning",
+      highlight: "First game drive spot",
+    },
+  ];
 
   const safariRoutes = [
     {
@@ -117,6 +277,31 @@ const Amboseli = () => {
       ...bookingForm,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Function to handle image errors
+  const handleImageError = (e, fallbackImage) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = fallbackImage;
+  };
+
+  // Function to open gallery modal
+  const openGalleryModal = (index) => {
+    setActiveGalleryImage(index);
+    setShowGalleryModal(true);
+  };
+
+  // Function to navigate gallery
+  const nextGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
   };
 
   // Function to send booking to backend
@@ -321,6 +506,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
     if (e.target === e.currentTarget) {
       setShowItineraryModal(false);
       setShowBookingModal(false);
+      setShowGalleryModal(false);
     }
   };
 
@@ -332,6 +518,7 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           src={parkInfo.image}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
+          onError={(e) => handleImageError(e, parkInfo.fallbackImage)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-amber-900/60 to-amber-600/40"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -470,6 +657,126 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Gallery Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Amboseli Gallery
+          </h2>
+          <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Experience the majestic beauty of Amboseli through our collection of
+            images showcasing elephants, Kilimanjaro, and the park's diverse
+            wildlife.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            {galleryImages.slice(0, 8).map((image, index) => (
+              <div
+                key={image.id}
+                className="relative overflow-hidden rounded-lg shadow-md cursor-pointer group"
+                onClick={() => openGalleryModal(index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => handleImageError(e, image.fallback)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-3 text-white">
+                    <h4 className="font-semibold text-sm">{image.title}</h4>
+                    <p className="text-xs opacity-90">{image.description}</p>
+                  </div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-amber-600 text-white text-xs px-2 py-1 rounded-full">
+                    {image.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => openGalleryModal(0)}
+              className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              View Full Gallery ({galleryImages.length} images)
+            </button>
+          </div>
+        </div>
+
+        {/* Attractions Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Top Attractions in Amboseli
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map((attraction) => (
+              <div
+                key={attraction.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-amber-100"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={attraction.image}
+                    alt={attraction.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    onError={(e) => handleImageError(e, attraction.fallback)}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {attraction.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {attraction.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-amber-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Best: {attraction.bestTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-amber-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Highlight: {attraction.highlight}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -664,6 +971,128 @@ ${parkInfo.highlights.map((highlight) => `• ${highlight}`).join("\n")}
           </div>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh]">
+            <button
+              onClick={() => setShowGalleryModal(false)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevGalleryImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextGalleryImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Main Image */}
+            <div className="h-[70vh] flex items-center justify-center">
+              <img
+                src={galleryImages[activeGalleryImage].src}
+                alt={galleryImages[activeGalleryImage].title}
+                className="max-h-full max-w-full object-contain rounded-lg"
+                onError={(e) =>
+                  handleImageError(
+                    e,
+                    galleryImages[activeGalleryImage].fallback
+                  )
+                }
+              />
+            </div>
+
+            {/* Image Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-4 text-white">
+              <h3 className="text-xl font-bold mb-2">
+                {galleryImages[activeGalleryImage].title}
+              </h3>
+              <p className="mb-2">
+                {galleryImages[activeGalleryImage].description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-sm bg-amber-600 px-3 py-1 rounded-full">
+                  {galleryImages[activeGalleryImage].category}
+                </span>
+                <span className="text-sm">
+                  {activeGalleryImage + 1} / {galleryImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex overflow-x-auto gap-2 mt-4 pb-2">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setActiveGalleryImage(index)}
+                  className={`flex-shrink-0 w-20 h-20 overflow-hidden rounded-lg border-2 transition-all ${
+                    index === activeGalleryImage
+                      ? "border-amber-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, image.fallback)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (

@@ -5,6 +5,8 @@ const TsavoEast = () => {
   const [selectedDays, setSelectedDays] = useState(3);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [activeGalleryImage, setActiveGalleryImage] = useState(0);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     fullName: "",
     email: "",
@@ -12,14 +14,14 @@ const TsavoEast = () => {
     travelers: 1,
     contactMethod: "whatsapp",
     message: "",
-    startDate: "", // Added startDate field
+    startDate: "",
   });
 
   const parkInfo = {
     id: 2,
     name: "Tsavo East National Park",
-    image:
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    image: "/assets/tsa-east.png",
+    fallbackImage: "/assets/tsavoeast-page.jpg",
     description:
       "Known for the 'red elephants' and vast wilderness areas, offering some of the most spectacular game viewing in Africa.",
     highlights: [
@@ -35,6 +37,164 @@ const TsavoEast = () => {
     size: "13,747 km² - One of Kenya's largest parks",
     specialFeature: "Home to the famous Man-Eaters of Tsavo lions",
   };
+
+  // Tsavo East Gallery Images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "/assets/ele-east.png",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Red Elephants",
+      description: "Famous elephants dust-bathing in Tsavo's red soil",
+      category: "wildlife",
+    },
+    {
+      id: 2,
+      src: "/assets/lugaz-east.png",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Lugard Falls",
+      description: "Spectacular rapids on the Galana River",
+      category: "landscape",
+    },
+    {
+      id: 3,
+      src: "/assets/yata-east.png",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Yatta Plateau",
+      description: "World's longest lava flow stretching 290km",
+      category: "landscape",
+    },
+    {
+      id: 4,
+      src: "/assets/aruba-east.png",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Aruba Dam",
+      description: "Major water source attracting diverse wildlife",
+      category: "wildlife",
+    },
+    {
+      id: 5,
+      src: "/assets/tsavo-lions.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Tsavo Lions",
+      description: "Famous maneless lions of Tsavo East",
+      category: "wildlife",
+    },
+    {
+      id: 6,
+      src: "/assets/mudanda-rock-tsavo.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Mudanda Rock",
+      description: "Natural rock dam with waterhole below",
+      category: "landscape",
+    },
+    {
+      id: 7,
+      src: "/assets/vulturine-guineafowl-tsavo.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Vulturine Guineafowl",
+      description: "Striking birds found in Tsavo's arid areas",
+      category: "birds",
+    },
+    {
+      id: 8,
+      src: "/assets/tsavo-sunset.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Desert Sunset",
+      description: "Breathtaking sunsets over the arid plains",
+      category: "landscape",
+    },
+    {
+      id: 9,
+      src: "/assets/giraffe-herd-tsavo.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Giraffe Herd",
+      description: "Large herds of Masai giraffes roaming freely",
+      category: "wildlife",
+    },
+    {
+      id: 10,
+      src: "/assets/galana-river-tsavo.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Galana River",
+      description: "Lifeline of Tsavo East's ecosystem",
+      category: "landscape",
+    },
+    {
+      id: 11,
+      src: "/assets/tsavo-buffalo.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Cape Buffalo",
+      description: "Large herds of African buffalo in the park",
+      category: "wildlife",
+    },
+    {
+      id: 12,
+      src: "/assets/tsavo-birds.jpg",
+      fallback: "/assets/tsavo-gallery/default-gallery.jpg",
+      title: "Bird Watching",
+      description: "Over 500 bird species recorded in Tsavo",
+      category: "birds",
+    },
+  ];
+
+  // Tsavo East Attractions
+  const attractions = [
+    {
+      id: 1,
+      name: "Lugard Falls",
+      image: "/assets/lugard-falls-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "Spectacular white water rapids on the Galana River",
+      bestTime: "Year-round (best after rains)",
+      highlight: "Powerful water forces through narrow rock",
+    },
+    {
+      id: 2,
+      name: "Aruba Dam",
+      image: "/assets/aruba-dam-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "Man-made dam attracting large herds of wildlife",
+      bestTime: "Dry season",
+      highlight: "Elephant and buffalo congregations",
+    },
+    {
+      id: 3,
+      name: "Yatta Plateau",
+      image: "/assets/yatta-plateau-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "World's longest lava flow (290km)",
+      bestTime: "Year-round",
+      highlight: "Geological wonder",
+    },
+    {
+      id: 4,
+      name: "Mudanda Rock",
+      image: "/assets/mudanda-rock-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "Natural rock dam with waterhole attracting animals",
+      bestTime: "Dry season",
+      highlight: "Wildlife viewing platform",
+    },
+    {
+      id: 5,
+      name: "Kanderi Swamp",
+      image: "/assets/kanderi-swamp-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "Permanent swamp attracting birds and animals",
+      bestTime: "Year-round",
+      highlight: "Bird watching paradise",
+    },
+    {
+      id: 6,
+      name: "Voi River Viewpoint",
+      image: "/assets/voi-river-attraction.jpg",
+      fallback: "/assets/tsavo-attractions/default-attraction.jpg",
+      description: "Scenic viewpoint overlooking the Voi River",
+      bestTime: "Early morning or late afternoon",
+      highlight: "Panoramic views",
+    },
+  ];
 
   const safariRoutes = [
     {
@@ -83,9 +243,15 @@ const TsavoEast = () => {
       } else {
         const parksInRoute = route.split("→").map((park) => park.trim());
         const currentParkIndex = Math.min(i - 2, parksInRoute.length - 1);
-        itineraries.push(
-          `Day ${i}: Full day exploration of ${parksInRoute[currentParkIndex]} with picnic lunch and wildlife viewing`
-        );
+        if (parksInRoute[currentParkIndex] === "Tsavo East") {
+          itineraries.push(
+            `Day ${i}: Full day exploring Tsavo East with picnic lunch, visiting Aruba Dam and Mudanda Rock`
+          );
+        } else {
+          itineraries.push(
+            `Day ${i}: Full day exploration of ${parksInRoute[currentParkIndex]} with wildlife viewing`
+          );
+        }
       }
     }
     return itineraries;
@@ -113,12 +279,36 @@ const TsavoEast = () => {
     });
   };
 
-  // FIXED: Function to send booking to your backend
+  // Function to handle image errors
+  const handleImageError = (e, fallbackImage) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = fallbackImage;
+  };
+
+  // Function to open gallery modal
+  const openGalleryModal = (index) => {
+    setActiveGalleryImage(index);
+    setShowGalleryModal(true);
+  };
+
+  // Function to navigate gallery
+  const nextGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevGalleryImage = () => {
+    setActiveGalleryImage((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    );
+  };
+
+  // Function to send booking to backend
   const sendBookingToBackend = async (bookingData) => {
     try {
       console.log("📤 Sending Tsavo East booking to backend...", bookingData);
 
-      // Send to your Flask backend
       const response = await fetch("http://localhost:5000/api/send-booking", {
         method: "POST",
         headers: {
@@ -149,13 +339,8 @@ const TsavoEast = () => {
     }
   };
 
-  // FIXED: Function to send direct email (fallback)
+  // Function to send direct email (fallback)
   const sendDirectEmail = (bookingData) => {
-    const totalPrice = calculatePrice(
-      bookingData.days,
-      selectedRoute.priceRange
-    );
-
     const emailBody = `
 TSAVO EAST SAFARI BOOKING DETAILS:
 
@@ -163,7 +348,7 @@ TSAVO EAST SAFARI BOOKING DETAILS:
 🚗 ROUTE/ITINERARY: ${bookingData.route}
 📅 DURATION: ${bookingData.days} days
 👥 TRAVELERS: ${bookingData.travelers}
-💰 ESTIMATED TOTAL PRICE: $${totalPrice}
+💰 ESTIMATED TOTAL PRICE: $${bookingData.totalPrice}
 📝 ITINERARY TYPE: ${bookingData.route}
 
 📋 ITINERARY:
@@ -174,8 +359,6 @@ ${bookingData.itinerary.map((day, index) => `${index + 1}. ${day}`).join("\n")}
 - Email: ${bookingData.email}
 - Phone: ${bookingData.phone}
 - Start Date: ${bookingData.startDate || "Flexible"}
-
-📞 PREFERRED CONTACT: ${bookingData.contactMethod}
 
 💬 ADDITIONAL MESSAGE:
 ${bookingData.message || "No additional message"}
@@ -190,7 +373,7 @@ ${bookingData.message || "No additional message"}
     );
   };
 
-  // FIXED: Main submit function
+  // Main submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -202,14 +385,14 @@ ${bookingData.message || "No additional message"}
     const totalPrice = calculatePrice(selectedDays, selectedRoute.priceRange);
     const itinerary = generateItinerary(selectedDays, selectedRoute.name);
 
-    // FIXED: Prepare booking data to match your backend's expected fields
+    // Prepare booking data to match backend's expected fields
     const bookingData = {
       // REQUIRED FIELDS by backend:
       park: parkInfo.name,
       lodge: selectedRoute.name, // Backend expects 'lodge', using route name
       days: selectedDays,
       travelers: bookingForm.travelers,
-      totalPrice: totalPrice, // Backend expects 'totalPrice' (single value)
+      totalPrice: totalPrice,
       fullName: bookingForm.fullName,
       email: bookingForm.email,
       phone: bookingForm.phone,
@@ -221,19 +404,16 @@ ${bookingData.message || "No additional message"}
       bestTime: parkInfo.bestTime,
       wildlife: parkInfo.wildlife,
       specialFeature: parkInfo.specialFeature,
-      lodgeDescription: selectedRoute.description, // Using route description as lodge description
-      itinerary: itinerary.join("\n"), // Backend expects string, not array
+      lodgeDescription: selectedRoute.description,
+      itinerary: itinerary.join("\n"),
 
       // Additional info for tracking
       bookingSource: "Tsavo East Park Page",
       contactMethod: bookingForm.contactMethod,
-      route: selectedRoute.name, // Keep original route info
+      route: selectedRoute.name,
     };
 
-    console.log(
-      "📝 Tsavo East booking data (formatted for backend):",
-      bookingData
-    );
+    console.log("📝 Tsavo East booking data:", bookingData);
 
     // Try to send to backend first
     const result = await sendBookingToBackend(bookingData);
@@ -245,8 +425,6 @@ ${bookingData.message || "No additional message"}
       sendDirectEmail({
         ...bookingData,
         route: selectedRoute.name,
-        minPrice: selectedRoute.priceRange.min * selectedDays,
-        maxPrice: selectedRoute.priceRange.max * selectedDays,
       });
     }
 
@@ -269,6 +447,7 @@ ${bookingData.message || "No additional message"}
     if (e.target === e.currentTarget) {
       setShowItineraryModal(false);
       setShowBookingModal(false);
+      setShowGalleryModal(false);
     }
   };
 
@@ -280,6 +459,7 @@ ${bookingData.message || "No additional message"}
           src={parkInfo.image}
           alt={parkInfo.name}
           className="w-full h-full object-cover"
+          onError={(e) => handleImageError(e, parkInfo.fallbackImage)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-orange-900/60 to-orange-600/40"></div>
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -417,6 +597,125 @@ ${bookingData.message || "No additional message"}
           </div>
         </div>
 
+        {/* NEW: Gallery Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Tsavo East Gallery
+          </h2>
+          <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Explore the unique landscapes and wildlife of Tsavo East through our
+            collection of images showcasing the park's most spectacular moments.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+            {galleryImages.slice(0, 8).map((image, index) => (
+              <div
+                key={image.id}
+                className="relative overflow-hidden rounded-lg shadow-md cursor-pointer group"
+                onClick={() => openGalleryModal(index)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.title}
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => handleImageError(e, image.fallback)}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-3 text-white">
+                    <h4 className="font-semibold text-sm">{image.title}</h4>
+                    <p className="text-xs opacity-90">{image.description}</p>
+                  </div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-orange-600 text-white text-xs px-2 py-1 rounded-full">
+                    {image.category}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <button
+              onClick={() => openGalleryModal(0)}
+              className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+            >
+              View Full Gallery ({galleryImages.length} images)
+            </button>
+          </div>
+        </div>
+
+        {/* NEW: Attractions Section */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
+            Top Attractions in Tsavo East
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {attractions.map((attraction) => (
+              <div
+                key={attraction.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-orange-100"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={attraction.image}
+                    alt={attraction.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    onError={(e) => handleImageError(e, attraction.fallback)}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {attraction.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {attraction.description}
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-orange-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Best: {attraction.bestTime}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <svg
+                        className="w-4 h-4 text-orange-600 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      <span className="text-gray-700">
+                        Highlight: {attraction.highlight}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Safari Routes */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12 font-serif">
@@ -475,6 +774,83 @@ ${bookingData.message || "No additional message"}
           </div>
         </div>
 
+        {/* Historical Information */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-orange-200">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 font-serif">
+            The Man-Eaters of Tsavo
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                Historical Legend
+              </h3>
+              <p className="text-gray-700 mb-4">
+                In 1898, during the construction of the Kenya-Uganda Railway,
+                two maneless male lions terrorized the construction camp at the
+                Tsavo River, killing and eating numerous railway workers over a
+                9-month period. The lions' reign of terror was finally ended by
+                Lieutenant Colonel John Henry Patterson.
+              </p>
+              <ul className="space-y-2 text-gray-700">
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-600 rounded-full mr-3"></span>
+                  <strong>Duration:</strong> March to December 1898
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-600 rounded-full mr-3"></span>
+                  <strong>Victims:</strong> Estimated 28-135 railway workers
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-600 rounded-full mr-3"></span>
+                  <strong>Current Location:</strong> Specimens in Field Museum,
+                  Chicago
+                </li>
+                <li className="flex items-center">
+                  <span className="w-2 h-2 bg-orange-600 rounded-full mr-3"></span>
+                  <strong>Movies:</strong> "The Ghost and the Darkness" (1996)
+                </li>
+              </ul>
+            </div>
+            <div className="bg-orange-50 p-6 rounded-lg">
+              <h4 className="font-semibold text-gray-800 mb-3">
+                Tsavo Lion Characteristics
+              </h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span>Mane:</span>
+                  <span className="text-orange-600 font-semibold">
+                    Often maneless
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Size:</span>
+                  <span className="text-orange-600 font-semibold">
+                    Larger than typical lions
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Behavior:</span>
+                  <span className="text-orange-600 font-semibold">
+                    More aggressive
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Habitat:</span>
+                  <span className="text-orange-600 font-semibold">
+                    Arid regions
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Diet:</span>
+                  <span className="text-orange-600 font-semibold">
+                    Includes large prey
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Additional Information */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12 border border-orange-200">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-8 font-serif">
@@ -517,6 +893,128 @@ ${bookingData.message || "No additional message"}
           </div>
         </div>
       </div>
+
+      {/* Gallery Modal */}
+      {showGalleryModal && (
+        <div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+          onClick={handleBackdropClick}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh]">
+            <button
+              onClick={() => setShowGalleryModal(false)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={prevGalleryImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={nextGalleryImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 z-10 transition-colors"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Main Image */}
+            <div className="h-[70vh] flex items-center justify-center">
+              <img
+                src={galleryImages[activeGalleryImage].src}
+                alt={galleryImages[activeGalleryImage].title}
+                className="max-h-full max-w-full object-contain rounded-lg"
+                onError={(e) =>
+                  handleImageError(
+                    e,
+                    galleryImages[activeGalleryImage].fallback
+                  )
+                }
+              />
+            </div>
+
+            {/* Image Info */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-4 text-white">
+              <h3 className="text-xl font-bold mb-2">
+                {galleryImages[activeGalleryImage].title}
+              </h3>
+              <p className="mb-2">
+                {galleryImages[activeGalleryImage].description}
+              </p>
+              <div className="flex justify-between items-center">
+                <span className="text-sm bg-orange-600 px-3 py-1 rounded-full">
+                  {galleryImages[activeGalleryImage].category}
+                </span>
+                <span className="text-sm">
+                  {activeGalleryImage + 1} / {galleryImages.length}
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex overflow-x-auto gap-2 mt-4 pb-2">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setActiveGalleryImage(index)}
+                  className={`flex-shrink-0 w-20 h-20 overflow-hidden rounded-lg border-2 transition-all ${
+                    index === activeGalleryImage
+                      ? "border-orange-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => handleImageError(e, image.fallback)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Itinerary Modal */}
       {showItineraryModal && selectedRoute && (
@@ -720,19 +1218,6 @@ ${bookingData.message || "No additional message"}
 
                 <div>
                   <label className="block text-gray-700 font-semibold mb-2">
-                    Preferred Start Date
-                  </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={bookingForm.startDate}
-                    onChange={handleFormChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
                     Preferred Contact Method *
                   </label>
                   <div className="flex space-x-6">
@@ -759,6 +1244,19 @@ ${bookingData.message || "No additional message"}
                       Email
                     </label>
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Preferred Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={bookingForm.startDate}
+                    onChange={handleFormChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
+                  />
                 </div>
 
                 <div>
