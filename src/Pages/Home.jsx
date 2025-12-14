@@ -319,26 +319,27 @@ export default function Home() {
       lodges: [
         {
           name: "Ngulia Safari Lodge",
-          image: "/assets/lodges/ngulia-safari-lodge.jpg",
+          image: "/assets/ngulia4.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Lodge perched on the edge of the Rift Valley with spectacular views and excellent rhino viewing opportunities.",
           gallery: [
-            "/assets/lodges/gallery/ngulia-1.jpg",
-            "/assets/lodges/gallery/ngulia-2.jpg",
-            "/assets/lodges/gallery/ngulia-3.jpg",
+            "/assets/ngulia.png",
+            "/assets/ngulia1.png",
+            "/assets/ngulia2.png",
+            "/assets/ngulia3.png",
           ],
         },
         {
           name: "Kilaguni Serena Lodge",
-          image: "/assets/lodges/kilaguni-serena.jpg",
+          image: "/assets/kilaguni.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "First lodge to be built in a Kenyan national park, offering stunning views of Mount Kilimanjaro and waterhole game viewing.",
           gallery: [
-            "/assets/lodges/gallery/kilaguni-1.jpg",
-            "/assets/lodges/gallery/kilaguni-2.jpg",
-            "/assets/lodges/gallery/kilaguni-3.jpg",
+            "/assets/kilaguni1.png",
+            "/assets/kilaguni2.png",
+            "/assets/kilaguni3.png",
           ],
         },
       ],
@@ -366,51 +367,51 @@ export default function Home() {
       lodges: [
         {
           name: "Hunters Manor",
-          image: "/assets/lodges/hunters-manor.jpg",
+          image: "/assets/huntusr-amboli.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Exclusive boutique lodge offering personalized service with stunning Kilimanjaro views and luxury accommodations.",
           gallery: [
-            "/assets/lodges/gallery/hunters-1.jpg",
-            "/assets/lodges/gallery/hunters-2.jpg",
-            "/assets/lodges/gallery/hunters-3.jpg",
+            "/assets/hintursambo1.png",
+            "/assets/hintursambo2.png",
+            "/assets/hintursambo3.png",
           ],
         },
         {
           name: "Penety House",
-          image: "/assets/lodges/penety-house.jpg",
+          image: "/assets/penety-Ambo.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Intimate lodge offering personalized service with excellent views of Mount Kilimanjaro and guided nature walks.",
           gallery: [
-            "/assets/lodges/gallery/penety-1.jpg",
-            "/assets/lodges/gallery/penety-2.jpg",
-            "/assets/lodges/gallery/penety-3.jpg",
+            "/assets/penety-Ambo1.png",
+            "/assets/penety-Ambo2.png",
+            "/assets/penety-Ambo3.png",
           ],
         },
         {
           name: "Kilima Safari Camp",
-          image: "/assets/lodges/kilima-safari-camp.jpg",
+          image: "/assets/kiliambo.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Eco-friendly camp nestled at the foot of Kilimanjaro, offering authentic safari experiences with modern comforts.",
           gallery: [
-            "/assets/lodges/gallery/kilima-camp-1.jpg",
-            "/assets/lodges/gallery/kilima-camp-2.jpg",
-            "/assets/lodges/gallery/kilima-camp-3.jpg",
+            "/assets/kiliambo1.png",
+            "/assets/kiliambo2.png",
+            "/assets/kiliambo3.png",
           ],
         },
         {
           name: "AA Lodge Amboseli",
-          image: "/assets/lodges/aa-lodge-amboseli.jpg",
+          image: "/assets/AA-ambo.png",
           fallbackImage: "/assets/lodges/default-lodge.jpg",
           description:
             "Comfortable family lodge with excellent facilities, perfect for both first-time and experienced safari-goers.",
           gallery: [
-            "/assets/lodges/gallery/aa-amboseli-1.jpg",
-            "/assets/lodges/gallery/aa-amboseli-2.jpg",
-            "/assets/lodges/gallery/aa-amboseli-3.jpg",
-          ],
+            "/assets/AA-ambo1.png",
+            "/assets/AA-ambo2.png",
+            "/assets/AA-ambo3.png",
+                  ],
         },
       ],
     },
