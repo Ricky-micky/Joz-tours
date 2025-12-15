@@ -44,7 +44,7 @@ const Taitahills = () => {
   const galleryImages = [
     {
       id: 1,
-      src: "/assets/taita-cloud-forest.jpg",
+      src: "/assets/Cloud-Forest .png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Cloud Forest Canopy",
       description: "Misty cloud forests with ancient trees covered in moss",
@@ -52,7 +52,7 @@ const Taitahills = () => {
     },
     {
       id: 2,
-      src: "/assets/taita-thrush.jpg",
+      src: "/assets/thrush-taita.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Taita Thrush",
       description: "Critically endangered bird found only in Taita Hills",
@@ -60,7 +60,7 @@ const Taitahills = () => {
     },
     {
       id: 3,
-      src: "/assets/taita-hills-view.jpg",
+      src: "/assets/panomic.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Panoramic View",
       description: "Spectacular views overlooking the Tsavo plains",
@@ -68,7 +68,7 @@ const Taitahills = () => {
     },
     {
       id: 4,
-      src: "/assets/taita-white-eye.jpg",
+      src: "/assets/white-eyes.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Taita White-eye",
       description: "Endangered bird species with less than 1000 individuals",
@@ -76,7 +76,7 @@ const Taitahills = () => {
     },
     {
       id: 5,
-      src: "/assets/forest-hiking.jpg",
+      src: "/assets/frorest-hking.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Forest Hiking Trails",
       description: "Guided hikes through ancient cloud forest paths",
@@ -84,7 +84,7 @@ const Taitahills = () => {
     },
     {
       id: 6,
-      src: "/assets/taita-waterfall.jpg",
+      src: "/assets/water-fall.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Forest Waterfall",
       description: "Crystal clear waterfalls within the cloud forests",
@@ -92,7 +92,7 @@ const Taitahills = () => {
     },
     {
       id: 7,
-      src: "/assets/bird-watching.jpg",
+      src: "/assets/bird.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Bird Watching",
       description: "Spotting rare endemic bird species with expert guides",
@@ -100,7 +100,7 @@ const Taitahills = () => {
     },
     {
       id: 8,
-      src: "/assets/moss-covered-trees.jpg",
+      src: "/assets/forest.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Moss-Covered Trees",
       description: "Ancient trees draped in thick moss and epiphytes",
@@ -108,7 +108,7 @@ const Taitahills = () => {
     },
     {
       id: 9,
-      src: "/assets/taita-apalis.jpg",
+      src: "/assets/apils.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Taita Apalis",
       description: "One of the world's rarest birds, confined to Taita Hills",
@@ -116,7 +116,7 @@ const Taitahills = () => {
     },
     {
       id: 10,
-      src: "/assets/conservation-research.jpg",
+      src: "joz/public/assets/consavation .png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Conservation Research",
       description: "Scientific research and conservation activities",
@@ -124,7 +124,7 @@ const Taitahills = () => {
     },
     {
       id: 11,
-      src: "/assets/sunrise-hills.jpg",
+      src: "/assets/sunrise.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Sunrise Over Hills",
       description: "Breathtaking sunrise over the Taita Hills",
@@ -132,7 +132,7 @@ const Taitahills = () => {
     },
     {
       id: 12,
-      src: "/assets/forest-canopy-walk.jpg",
+      src: "/assets/canopy.png",
       fallback: "/assets/taita-gallery/default-gallery.jpg",
       title: "Canopy Walk",
       description: "Exploring the forest from elevated walkways",
@@ -145,7 +145,7 @@ const Taitahills = () => {
     {
       id: 1,
       name: "Ngangao Forest",
-      image: "/assets/ngangao-forest.jpg",
+      image: "/assets/taita-forest.png",
       fallback: "/assets/taita-attractions/default-attraction.jpg",
       description: "Largest forest fragment with best-preserved cloud forest",
       bestTime: "Year-round",
@@ -154,7 +154,7 @@ const Taitahills = () => {
     {
       id: 2,
       name: "Mbololo Forest",
-      image: "/assets/mbololo-forest.jpg",
+      image: "/assets/mbololo.png",
       fallback: "/assets/taita-attractions/default-attraction.jpg",
       description: "Highest peak with spectacular panoramic views",
       bestTime: "June-September (drier trails)",
@@ -163,7 +163,7 @@ const Taitahills = () => {
     {
       id: 3,
       name: "Chawia Forest",
-      image: "/assets/chawia-forest.jpg",
+      image: "/assets/cha-forest.png",
       fallback: "/assets/taita-attractions/default-attraction.jpg",
       description: "Small but important forest fragment for conservation",
       bestTime: "Year-round",
@@ -172,7 +172,7 @@ const Taitahills = () => {
     {
       id: 4,
       name: "Taita Hills Sanctuary Lodge",
-      image: "/assets/taita-lodge.jpg",
+      image: "/assets/lodge-taita.png",
       fallback: "/assets/taita-attractions/default-attraction.jpg",
       description:
         "Luxury eco-lodge with stunning views and conservation focus",
@@ -191,7 +191,7 @@ const Taitahills = () => {
     {
       id: 6,
       name: "Bird Watching Towers",
-      image: "/assets/bird-towers.jpg",
+      image: "/assets/tower-taita.png",
       fallback: "/assets/taita-attractions/default-attraction.jpg",
       description: "Strategic towers for observing endemic bird species",
       bestTime: "Early morning",

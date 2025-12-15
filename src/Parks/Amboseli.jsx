@@ -21,7 +21,7 @@ const Amboseli = () => {
   const parkInfo = {
     id: 1,
     name: "Amboseli National Park",
-    image: "/assets/parks/amboseli.jpg",
+    image: "/assets/amboseli.png",
     fallbackImage: "/assets/amboseli-page.jpg",
     description:
       "Famous for its large elephant herds and stunning views of Mount Kilimanjaro.",
@@ -42,7 +42,7 @@ const Amboseli = () => {
   const galleryImages = [
     {
       id: 1,
-      src: "/assets/elephants-kilimanjaro-amboseli.jpg",
+      src: "/assets/elepha-ambo1.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Elephants with Kilimanjaro",
       description: "Iconic view of elephants against Africa's highest peak",
@@ -50,7 +50,7 @@ const Amboseli = () => {
     },
     {
       id: 2,
-      src: "/assets/sunrise-kilimanjaro-amboseli.jpg",
+      src: "/assets/kilima-set.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Kilimanjaro Sunrise",
       description: "Stunning sunrise over Mount Kilimanjaro",
@@ -58,7 +58,7 @@ const Amboseli = () => {
     },
     {
       id: 3,
-      src: "/assets/elephant-herd-amboseli.jpg",
+      src: "/assets/ele-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Elephant Herd",
       description: "Large herds of elephants in their natural habitat",
@@ -66,7 +66,7 @@ const Amboseli = () => {
     },
     {
       id: 4,
-      src: "/assets/amboseli-swamps.jpg",
+      src: "/assets/olo-swamp.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Enkongo Narok Swamp",
       description: "Permanent swamps fed by Kilimanjaro's underground rivers",
@@ -74,7 +74,7 @@ const Amboseli = () => {
     },
     {
       id: 5,
-      src: "/assets/lion-amboseli.jpg",
+      src: "/assets/lions-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Amboseli Lions",
       description: "Majestic lions resting in the shade",
@@ -82,7 +82,7 @@ const Amboseli = () => {
     },
     {
       id: 6,
-      src: "/assets/maasai-culture-amboseli.jpg",
+      src: "/assets/maasai-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Maasai Culture",
       description: "Traditional Maasai warriors in Amboseli",
@@ -90,7 +90,7 @@ const Amboseli = () => {
     },
     {
       id: 7,
-      src: "/assets/flamingos-amboseli.jpg",
+      src: "/assets/fla-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Lesser Flamingos",
       description: "Flamingos gathering in Amboseli's alkaline lakes",
@@ -98,7 +98,7 @@ const Amboseli = () => {
     },
     {
       id: 8,
-      src: "/assets/amboseli-sunset.jpg",
+      src: "/assets/sunset-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "African Sunset",
       description: "Breathtaking sunset over the Amboseli plains",
@@ -106,7 +106,7 @@ const Amboseli = () => {
     },
     {
       id: 9,
-      src: "/assets/cheetah-amboseli.jpg",
+      src: "/assets/cheete-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Cheetah Hunting",
       description: "Cheetahs scanning the open plains for prey",
@@ -114,7 +114,7 @@ const Amboseli = () => {
     },
     {
       id: 10,
-      src: "/assets/observation-hill-amboseli.jpg",
+      src: "/assets/obsavation.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Observation Hill",
       description: "360-degree panoramic views of the entire park",
@@ -122,7 +122,7 @@ const Amboseli = () => {
     },
     {
       id: 11,
-      src: "/assets/buffalo-herd-amboseli.jpg",
+      src: "/assets/buf-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Cape Buffalo",
       description: "Large herds of African buffalo grazing",
@@ -130,7 +130,7 @@ const Amboseli = () => {
     },
     {
       id: 12,
-      src: "/assets/bird-watching-amboseli.jpg",
+      src: "/assets/bird-ambo.png",
       fallback: "/assets/amboseli-gallery/default-gallery.jpg",
       title: "Bird Watching",
       description: "Over 400 bird species recorded in Amboseli",
@@ -143,7 +143,7 @@ const Amboseli = () => {
     {
       id: 1,
       name: "Observation Hill",
-      image: "/assets/observation-hill-attraction.jpg",
+      image: "/assets/obsa-ambo.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "360-degree viewpoint overlooking the entire park",
       bestTime: "Sunrise or sunset",
@@ -152,7 +152,7 @@ const Amboseli = () => {
     {
       id: 2,
       name: "Enkongo Narok Swamp",
-      image: "/assets/enkongo-swamp-attraction.jpg",
+      image: "/assets/swamp.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "Permanent swamp attracting elephants and hippos",
       bestTime: "Dry season",
@@ -161,7 +161,7 @@ const Amboseli = () => {
     {
       id: 3,
       name: "Sinet Delta",
-      image: "/assets/sinet-delta-attraction.jpg",
+      image: "/assets/delta-ambo.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "River delta with diverse birdlife",
       bestTime: "Year-round",
@@ -170,7 +170,7 @@ const Amboseli = () => {
     {
       id: 4,
       name: "Kitirua Conservancy",
-      image: "/assets/kitirua-conservancy-attraction.jpg",
+      image: "/assets/con-ambo.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "Community-owned conservancy bordering the park",
       bestTime: "Year-round",
@@ -179,7 +179,7 @@ const Amboseli = () => {
     {
       id: 5,
       name: "Amboseli Research Centre",
-      image: "/assets/research-centre-attraction.jpg",
+      image: "/assets/tr-ambo.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "Long-term elephant research facility",
       bestTime: "Year-round",
@@ -188,7 +188,7 @@ const Amboseli = () => {
     {
       id: 6,
       name: "Kimana Gate Area",
-      image: "/assets/kimana-gate-attraction.jpg",
+      image: "/assets/kimana-ambo.png",
       fallback: "/assets/amboseli-attractions/default-attraction.jpg",
       description: "Entry point with excellent wildlife viewing",
       bestTime: "Early morning",

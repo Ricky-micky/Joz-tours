@@ -74,7 +74,7 @@ const TsavoEast = () => {
     },
     {
       id: 5,
-      src: "/assets/tsavo-lions.jpg",
+      src: "/assets/lion-tsavo.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Tsavo Lions",
       description: "Famous maneless lions of Tsavo East",
@@ -82,7 +82,7 @@ const TsavoEast = () => {
     },
     {
       id: 6,
-      src: "/assets/mudanda-rock-tsavo.jpg",
+      src: "/assets/mdanda-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Mudanda Rock",
       description: "Natural rock dam with waterhole below",
@@ -90,7 +90,7 @@ const TsavoEast = () => {
     },
     {
       id: 7,
-      src: "/assets/vulturine-guineafowl-tsavo.jpg",
+      src: "/assets/gin-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Vulturine Guineafowl",
       description: "Striking birds found in Tsavo's arid areas",
@@ -98,7 +98,7 @@ const TsavoEast = () => {
     },
     {
       id: 8,
-      src: "/assets/tsavo-sunset.jpg",
+      src: "/assets/sun-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Desert Sunset",
       description: "Breathtaking sunsets over the arid plains",
@@ -106,7 +106,7 @@ const TsavoEast = () => {
     },
     {
       id: 9,
-      src: "/assets/giraffe-herd-tsavo.jpg",
+      src: "/assets/gir-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Giraffe Herd",
       description: "Large herds of Masai giraffes roaming freely",
@@ -114,7 +114,7 @@ const TsavoEast = () => {
     },
     {
       id: 10,
-      src: "/assets/galana-river-tsavo.jpg",
+      src: "/assets/galana-river.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Galana River",
       description: "Lifeline of Tsavo East's ecosystem",
@@ -122,7 +122,7 @@ const TsavoEast = () => {
     },
     {
       id: 11,
-      src: "/assets/tsavo-buffalo.jpg",
+      src: "/assets/buf-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Cape Buffalo",
       description: "Large herds of African buffalo in the park",
@@ -130,7 +130,7 @@ const TsavoEast = () => {
     },
     {
       id: 12,
-      src: "/assets/tsavo-birds.jpg",
+      src: "/assets/bird-east.png",
       fallback: "/assets/tsavo-gallery/default-gallery.jpg",
       title: "Bird Watching",
       description: "Over 500 bird species recorded in Tsavo",
@@ -143,7 +143,7 @@ const TsavoEast = () => {
     {
       id: 1,
       name: "Lugard Falls",
-      image: "/assets/lugard-falls-attraction.jpg",
+      image: "/assets/fall-east.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "Spectacular white water rapids on the Galana River",
       bestTime: "Year-round (best after rains)",
@@ -152,7 +152,7 @@ const TsavoEast = () => {
     {
       id: 2,
       name: "Aruba Dam",
-      image: "/assets/aruba-dam-attraction.jpg",
+      image: "/assets/dam-east.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "Man-made dam attracting large herds of wildlife",
       bestTime: "Dry season",
@@ -161,7 +161,7 @@ const TsavoEast = () => {
     {
       id: 3,
       name: "Yatta Plateau",
-      image: "/assets/yatta-plateau-attraction.jpg",
+      image: "/assets/yata-east2.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "World's longest lava flow (290km)",
       bestTime: "Year-round",
@@ -170,7 +170,7 @@ const TsavoEast = () => {
     {
       id: 4,
       name: "Mudanda Rock",
-      image: "/assets/mudanda-rock-attraction.jpg",
+      image: "/assets/danda-east.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "Natural rock dam with waterhole attracting animals",
       bestTime: "Dry season",
@@ -179,7 +179,7 @@ const TsavoEast = () => {
     {
       id: 5,
       name: "Kanderi Swamp",
-      image: "/assets/kanderi-swamp-attraction.jpg",
+      image: "/assets/kanderi-east.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "Permanent swamp attracting birds and animals",
       bestTime: "Year-round",
@@ -188,7 +188,7 @@ const TsavoEast = () => {
     {
       id: 6,
       name: "Voi River Viewpoint",
-      image: "/assets/voi-river-attraction.jpg",
+      image: "/assets/river-view-easr.png",
       fallback: "/assets/tsavo-attractions/default-attraction.jpg",
       description: "Scenic viewpoint overlooking the Voi River",
       bestTime: "Early morning or late afternoon",

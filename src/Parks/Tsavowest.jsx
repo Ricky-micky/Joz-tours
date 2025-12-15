@@ -21,7 +21,7 @@ const TsavoWest = () => {
   const parkInfo = {
     id: 3,
     name: "Tsavo West National Park",
-    image: "/assets/parks/tsavo-west.jpg",
+    image: "/assets/weast1.png",
     fallbackImage: "/assets/tsavowest-page.jpg",
     description:
       "Features Mzima Springs, volcanic landscapes, and diverse wildlife in a dramatic setting.",
@@ -44,7 +44,7 @@ const TsavoWest = () => {
   const galleryImages = [
     {
       id: 1,
-      src: "/assets/mzima-springs-tsavowest.jpg",
+      src: "/assets/mzima1.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Mzima Springs",
       description: "Crystal-clear springs with underwater hippo observatory",
@@ -52,7 +52,7 @@ const TsavoWest = () => {
     },
     {
       id: 2,
-      src: "/assets/shetani-lava-tsavowest.jpg",
+      src: "/assets/shetani-weast.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Shetani Lava Flows",
       description: "Dramatic volcanic lava formations",
@@ -60,7 +60,7 @@ const TsavoWest = () => {
     },
     {
       id: 3,
-      src: "/assets/rhino-tsavowest.jpg",
+      src: "/assets/rih-weast.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Black Rhino",
       description: "Endangered black rhino at Ngulia Rhino Sanctuary",
@@ -68,7 +68,7 @@ const TsavoWest = () => {
     },
     {
       id: 4,
-      src: "/assets/underwater-hippo-tsavowest.jpg",
+      src: "/assets/hipo-weast.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Underwater Hippos",
       description: "Hippos viewed through the underwater observatory",
@@ -76,7 +76,7 @@ const TsavoWest = () => {
     },
     {
       id: 5,
-      src: "/assets/lake-jipe-tsavowest.jpg",
+      src: "/assets/Lake-Jipe.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Lake Jipe",
       description: "Freshwater lake with abundant birdlife",
@@ -84,7 +84,7 @@ const TsavoWest = () => {
     },
     {
       id: 6,
-      src: "/assets/chyulu-hills-tsavowest.jpg",
+      src: "/assets/chullu-hills.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Chyulu Hills",
       description: "Volcanic hills forming the park's dramatic backdrop",
@@ -92,7 +92,7 @@ const TsavoWest = () => {
     },
     {
       id: 7,
-      src: "/assets/leopard-tsavowest.jpg",
+      src: "/assets/Lake-Jipe.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Tsavo Leopard",
       description: "Elusive leopard resting on rock formations",
@@ -100,7 +100,7 @@ const TsavoWest = () => {
     },
     {
       id: 8,
-      src: "/assets/tsavowest-sunset.jpg",
+      src: "/assets/Volcanic-Sunset.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Volcanic Sunset",
       description: "Stunning sunset over the volcanic landscape",
@@ -108,7 +108,7 @@ const TsavoWest = () => {
     },
     {
       id: 9,
-      src: "/assets/elephant-lava-tsavowest.jpg",
+      src: "/assets/ele-west.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Elephants on Lava",
       description: "Elephants traversing the volcanic terrain",
@@ -116,7 +116,7 @@ const TsavoWest = () => {
     },
     {
       id: 10,
-      src: "/assets/bird-watching-tsavowest.jpg",
+      src: "/assets/brids-west.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Bird Watching",
       description: "Over 600 bird species recorded in the park",
@@ -124,7 +124,7 @@ const TsavoWest = () => {
     },
     {
       id: 11,
-      src: "/assets/poachers-lookout-tsavowest.jpg",
+      src: "/assets/view-pocher.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Poacher's Lookout",
       description: "Historic lookout point with panoramic views",
@@ -132,7 +132,7 @@ const TsavoWest = () => {
     },
     {
       id: 12,
-      src: "/assets/crocodile-mzima-tsavowest.jpg",
+      src: "/assets/crocadile-west.png",
       fallback: "/assets/tsavowest-gallery/default-gallery.jpg",
       title: "Mzima Crocodiles",
       description: "Nile crocodiles basking near the springs",
@@ -145,7 +145,7 @@ const TsavoWest = () => {
     {
       id: 1,
       name: "Mzima Springs",
-      image: "/assets/mzima-springs-attraction.jpg",
+      image: "/assets/mzima2.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Crystal-clear springs with underwater hippo observatory",
       bestTime: "Year-round",
@@ -154,7 +154,7 @@ const TsavoWest = () => {
     {
       id: 2,
       name: "Ngulia Rhino Sanctuary",
-      image: "/assets/ngulia-rhino-attraction.jpg",
+      image: "/assets/west-rino.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Protected area for endangered black rhinos",
       bestTime: "Early morning or evening",
@@ -163,7 +163,7 @@ const TsavoWest = () => {
     {
       id: 3,
       name: "Shetani Lava Flows",
-      image: "/assets/shetani-lava-attraction.jpg",
+      image: "/assets/shetani2.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Dramatic volcanic lava formations from 200 years ago",
       bestTime: "Morning for photography",
@@ -172,7 +172,7 @@ const TsavoWest = () => {
     {
       id: 4,
       name: "Lake Jipe",
-      image: "/assets/lake-jipe-attraction.jpg",
+      image: "/assets/jipe-west.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Freshwater lake shared with Tanzania, rich in birdlife",
       bestTime: "Dry season",
@@ -181,7 +181,7 @@ const TsavoWest = () => {
     {
       id: 5,
       name: "Poacher's Lookout",
-      image: "/assets/poachers-lookout-attraction.jpg",
+      image: "/assets/view.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Historic viewpoint with panoramic park views",
       bestTime: "Sunrise or sunset",
@@ -190,7 +190,7 @@ const TsavoWest = () => {
     {
       id: 6,
       name: "Chaimu Crater",
-      image: "/assets/chaimu-crater-attraction.jpg",
+      image: "/assets/chaima-west.png",
       fallback: "/assets/tsavowest-attractions/default-attraction.jpg",
       description: "Volcanic crater that can be climbed for views",
       bestTime: "Cool morning hours",
